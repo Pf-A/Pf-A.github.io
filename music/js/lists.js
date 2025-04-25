@@ -1,21 +1,28 @@
 function loadedLists() {
-            console.log('Loaded Lists.js')
+    console.log('Loaded Lists.js');
+}
+
+function toggleVisibility(activeSection) {
+    const sections = ['benefits', 'drawbacks', 'FAQs'];
+    
+    sections.forEach(section => {
+        const element = document.getElementById(section);
+        if (section === activeSection) {
+            element.style.display = 'block'; // Show active section
+        } else {
+            element.style.display = 'none'; // Hide inactive sections
+        }
+    });
 }
 
 function showBenefits() {
-            document.getElementById("benefits").style.display = "block";
-            document.getElementById("drawbacks").style.display = "none";
-            document.getElementById("FAQs").style.display = "none";
-        }
+    toggleVisibility('benefits');
+}
 
-        function showDrawbacks() {
-            document.getElementById("benefits").style.display = "none";
-            document.getElementById("drawbacks").style.display = "block";
-            document.getElementById("FAQs").style.display = "none";
-        }
+function showDrawbacks() {
+    toggleVisibility('drawbacks');
+}
 
-        function showFAQs() {
-            document.getElementById("benefits").style.display = "none";
-            document.getElementById("drawbacks").style.display = "none";
-            document.getElementById("FAQs").style.display = "block";
-        }
+function showFAQs() {
+    toggleVisibility('FAQs');
+}
