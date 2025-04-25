@@ -1,4 +1,4 @@
-function loaded() {
+function loadedCharts() {
   console.log('Loaded charts.js');
 }
         function showChart1() {
