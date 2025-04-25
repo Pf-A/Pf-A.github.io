@@ -1,3 +1,6 @@
+function loadedLists() {
+            console.log('Loaded Lists.js')
+
 function showBenefits() {
             document.getElementById("benefits").style.display = "block";
             document.getElementById("drawbacks").style.display = "none";
