@@ -27,7 +27,7 @@ function analyticUpdate() {
 }
 
 function uploadAnalytics(data) {
-    const serverUrl = 'https://thepuffinprogrammer.github.io/analytics.html'; // Replace with your server URL
+    const serverUrl = 'https://Pf-A.github.io/Solenoid/analytics.html'; // Replace with your server URL
 
     fetch(serverUrl, {
         method: 'POST',
@@ -58,3 +58,8 @@ function begin() {
     init();
     analyticUpdate(); // Trigger analytics upload
 }
+const loadedSolenoid = {
+  silent: function() {
+    console.log("Loading solenoid silently.");
+  }
+};
