@@ -21,3 +21,4 @@ function checkConsoleWarning() {
         function beginBootloader() {
             console.log('Found Bootloader.dat! ')
         }
+// developer functions. grayed out because it should be inline, for non internet use. 
