@@ -35,6 +35,8 @@ function cleanUp() {
             }
         }, 1000);
         }
+// for some reason, the musicwebsite.html was not going any farther than this, due to some random html tags. 
+// it is not showing on the .html, so i have replaced it with this 
             function enableDev() {
                 console.log('Enter the password: (hint: contains "i")');
                 const password = prompt('Enter password:');
