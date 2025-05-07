@@ -35,8 +35,6 @@ function cleanUp() {
             }
         }, 1000);
         }
-    </script>
-    <script>
             function enableDev() {
                 console.log('Enter the password: (hint: contains "i")');
                 const password = prompt('Enter password:');
