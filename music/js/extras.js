@@ -71,7 +71,7 @@ function cleanUp() {
             }
             function listFunctions(Serious) {
                 console.clear();
-                if (Serious ===  true or Serious === 1 ) { 
+                if (Serious ===  true ) { 
                 } else {
                 console.log('Available functions:');
                 console.log('autoexec() - Runs the OnLoad script.');
