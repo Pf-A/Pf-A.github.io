@@ -130,6 +130,9 @@ c {
              color: #00ff00; 
                text-align: center;
 }
+.hacker:after {
+            background-color: blue;
+}
 
 .disabled {
             opacity: 0.7;
