@@ -1,4 +1,5 @@
 // Anti copyright code, automatically triggered if recording is detected.
+        // Anti copyright code, automatically triggered if recording is detected.
 function loadedCopyright() {
         console.log('Loaded copyright detector')
 }
@@ -12,22 +13,23 @@ function loadedCopyright() {
 
         // Function to detect if the computer is recording
         function detectRecording() {
-                console.log('Began recording protection.')
+            console.log('Began recording protection.');
             const mediaDevices = navigator.mediaDevices;
             if (mediaDevices && mediaDevices.enumerateDevices) {
-            mediaDevices.enumerateDevices().then(devices => {
-                const recordingDevices = devices.filter(device => device.kind === 'audioinput' || device.kind === 'videoinput');
-                if (recordingDevices.length > 0) {
-                console.warn("Recording devices detected.");
-                antiCopyright();
-                }
-            }).catch(err => {
-                console.error("Error detecting recording devices:", err);
-            });
+                mediaDevices.enumerateDevices().then(devices => {
+                    const recordingDevices = devices.filter(device => device.kind === 'audioinput' || device.kind === 'videoinput');
+                    if (recordingDevices.length > 0) {
+                        console.log("Input devices detected, but not necessarily recording.");
+                    } else {
+                        console.log("No input devices detected.");
+                    }
+                }).catch(err => {
+                    console.error("Error detecting recording devices:", err);
+                });
             } else {
-            console.warn("Media devices API not supported.");
+                console.warn("Media devices API not supported.");
             }
-                console.log('Ended recording protection.')
+            console.log('Ended recording protection.');
         }
 // put the detectRecording function anywhere, but it is included here as a onload function.
 // too lazy to put it here :P
