@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Diddy Clicker Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+    h1 { color: #333; }
+    #clicker {
+      width: 200px;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    #clicker:active {
+      transform: scale(0.95);
+    }
+    .button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .upgrade {
+      background-color: #28a745;
+      color: white;
+      border: none;
+    }
+    .save {
+      background-color: #007bff;
+      color: white;
+      border: none;
+    }
+    .load {
+      background-color: #ffc107;
+      color: white;
+      border: none;
+    }
+    .secret-button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 20px 40px;
+      margin-top: 30px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🫃Diddy clicker! 2🫃</h1>
+  <text>v2.7.4 [Automatic Updater: Enabled]</text>
+  <h3>Made for albie. Built by Pf-A on github.</h3>
+  <h2>Clicks: <span id="clicks">0</span></h2>
+
+  <!-- Replace this image with your own -->
+  <img id="clicker" src="https://pf-a.github.io/dc/img/ok.jpg" alt="Click!" onclick="addClick()">
+
+  <div>
+    <button class="button upgrade" onclick="buyUpgrade(1)">Baby oil (Cost: <span id="cost1">10</span>)</button>
+    <button class="button upgrade" onclick="buyUpgrade(5)">Children (Cost: <span id="cost5">100</span>)</button>
+    <button class="button upgrade" onclick="buyAutoClicker()">Party (Cost: <span id="autoCost">250</span>)</button>
+    <button class="button upgrade" onclick="FreakOff()">Freak Off (Cost: <span id="fOCost">5000</span>)</button>
+    <button onclick="alert('Albie has been unlocked! You can now... uh.. do something with him.')" class="button upgrade">Albie (Cost: 10000 😩)</button>
+  </div>
+
+  <div>
+    <button class="button save" onclick="saveGame()">💾 Save</button>
+    <button class="button load" onclick="loadGame()">📂 Load</button>
+  </div>
+
+  <!-- Secret button for Easter Egg -->
+  <button class="secret-button" onclick="triggerEasterEgg()">🔑 Secret Button!</button>
+
+  <script>
+    let clicks = 0;
+    let clickPower = 1;
+    let upgradeCost1 = 10;
+    let upgradeCost5 = 100;
+    let autoClickerCost = 250;
+    let autoClickers = 0;
+
+    function updateDisplay() {
+      document.getElementById("clicks").innerText = Math.floor(clicks);
+      document.getElementById("cost1").innerText = upgradeCost1;
+      document.getElementById("cost5").innerText = upgradeCost5;
+      document.getElementById("autoCost").innerText = autoClickerCost;
+      document.getElementById("fOCost").innerText = 5000; // Fixed cost for Freak Off
+    }
+
+    function addClick() {
+      clicks += clickPower;
+      updateDisplay();
+    }
+
+    function buyUpgrade(amount) {
+      let cost = amount === 1 ? upgradeCost1 : upgradeCost5;
+      if (clicks >= cost) {
+        clicks -= cost;
+        clickPower += amount;
+        if (amount === 1) {
+          upgradeCost1 = Math.floor(upgradeCost1 * 1.5);
+        } else {
+          upgradeCost5 = Math.floor(upgradeCost5 * 1.7);
+        }
+        updateDisplay();
+      } else {
+        alert("Not enough clicks!");
+      }
+    }
+
+    function buyAutoClicker() {
+      if (clicks >= autoClickerCost) {
+        clicks -= autoClickerCost;
+        autoClickers++;
+        autoClickerCost = Math.floor(autoClickerCost * 2);
+        updateDisplay();
+        beginParty();
+      } else {
+        alert("Not enough clicks!");
+      }
+    }
+
+    setInterval(() => {
+      if (autoClickers > 0) {
+        clicks += autoClickers * clickPower;
+        updateDisplay();
+      }
+    }, 1000);
+
+    function saveGame() {
+      const save = {
+        clicks, clickPower, upgradeCost1, upgradeCost5, autoClickerCost, autoClickers
+      };
+      localStorage.setItem("clickerSave", JSON.stringify(save));
+      alert("Game saved!");
+    }
+
+    function loadGame() {
+      const save = JSON.parse(localStorage.getItem("clickerSave"));
+      if (save) {
+        clicks = save.clicks;
+        clickPower = save.clickPower;
+        upgradeCost1 = save.upgradeCost1;
+        upgradeCost5 = save.upgradeCost5;
+        autoClickerCost = save.autoClickerCost;
+        autoClickers = save.autoClickers;
+        updateDisplay();
+        alert("Game loaded!");
+      } else {
+        alert("No saved game found.");
+      }
+    }
+
+    updateDisplay();
+
+    function beginParty() {
+      document.body.style.backgroundImage = "url('https://pf-a.github.io/dc/img/d.png')";
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundRepeat = "no-repeat";
+      document.body.style.backgroundPosition = "center center";
+    }
+
+    function freakOff() { 
+      alert('You Freaking creep!');
+      // Repeated alert for extra fun
+      for (let i = 0; i < 30; i++) {
+        alert('You Freaking creep!');
+      }
+    }
+
+    // Random Event triggered every 10 seconds
+    setInterval(() => {
+      let randomEvent = Math.random();
+      if (randomEvent < 0.1) {
+        // A random event happens occasionally
+        alert("Random Event: Your click power has increased!");
+        clickPower += 2;
+        updateDisplay();
+      } else if (randomEvent < 0.2) {
+        // Another random event for extra variety
+        alert("Random Event: The party's over... but you got 1000 extra clicks!");
+        clicks += 1000;
+        updateDisplay();
+      }
+    }, 10000);
+
+    function triggerEasterEgg() {
+      alert("🎉 Surprise! You've found the secret Easter egg!");
+      let extraClicks = Math.floor(Math.random() * 5000);
+      clicks += extraClicks;
+      updateDisplay();
+      alert("You've gained " + extraClicks + " clicks!");
+    }
+
+  </script>
+</body>
+</html>
