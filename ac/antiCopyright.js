@@ -1,5 +1,6 @@
 // Anti copyright code, automatically triggered if recording is detected.
         // Anti copyright code, automatically triggered if recording is detected.
+
 function loadedCopyright() {
         console.log('Loaded copyright detector')
 }
@@ -10,6 +11,7 @@ function loadedCopyright() {
             document.querySelectorAll('img, script').forEach(el => el.style.display = 'none');
             document.querySelectorAll('link[rel="stylesheet"]').forEach(el => el.remove());
         }
+/*
 
         // Function to detect if the computer is recording
         function detectRecording() {
@@ -33,3 +35,4 @@ function loadedCopyright() {
         }
 // put the detectRecording function anywhere, but it is included here as a onload function.
 // too lazy to put it here :P
+*/
