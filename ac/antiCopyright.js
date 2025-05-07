@@ -1,4 +1,7 @@
 // Anti copyright code, automatically triggered if recording is detected.
+function loadedCopyright() {
+        console.log('Loaded copyright detector')
+}
         function antiCopyright() {
             alert("This website is protected by copyright law. Unauthorized use or reproduction is prohibited.");
             console.warn("Anti-copyright warning triggered.");
@@ -9,6 +12,7 @@
 
         // Function to detect if the computer is recording
         function detectRecording() {
+                console.log('Began recording protection.')
             const mediaDevices = navigator.mediaDevices;
             if (mediaDevices && mediaDevices.enumerateDevices) {
             mediaDevices.enumerateDevices().then(devices => {
@@ -23,6 +27,7 @@
             } else {
             console.warn("Media devices API not supported.");
             }
+                console.log('Ended recording protection.')
         }
 // put the detectRecording function anywhere, but it is included here as a onload function.
 // too lazy to put it here :P
