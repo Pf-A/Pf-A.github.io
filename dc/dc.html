@@ -155,10 +155,14 @@
       clicks += clickPower;
       totalClicks += clickPower;
       updateDisplay();
+      
     }
     function handleClick() {
   addClick();
   spawnFloatingClicker();
+      if children > 0 {
+        spawnFloatingChild;
+      }
 }
 
 function spawnFloatingClicker() {
