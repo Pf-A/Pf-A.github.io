@@ -56,6 +56,25 @@
       margin-top: 5px;
       color: #555;
     }
+    .floating-click {
+  position: absolute;
+  width: 50px;
+  pointer-events: none;
+  animation: floatUp 1s ease-out forwards;
+  z-index: 999;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) scale(0.5);
+  }
+}
+
   </style>
 </head>
 <body>
@@ -64,8 +83,10 @@
   <text>v3.0.0 [Automatic Updater: Enabled]</text>
   <h3>Made for albie, but shared with others. Built by Pf-A on github.</h3>
   <h2>Clicks: <span id="clicks">0</span></h2>
-
-  <img id="clicker" src="https://pf-a.github.io/dc/img/ok.jpg" alt="Click!" onclick="addClick()">
+  
+<div id="clicker-container" style="position: relative; display: inline-block;">
+  <img id="clicker" src="https://pf-a.github.io/dc/img/ok.jpg" alt="Click!" onclick="handleClick()" />
+</div>
 
   <div>
     <button class="button upgrade" onclick="buyUpgrade(1)" data-tooltip="Increases click power by 1">Baby oil (Cost: <span id="cost1">10</span>)</button>
@@ -84,6 +105,8 @@
     <p>Total Clicks: <span id="totalClicks">0</span></p>
     <p>Click Power: <span id="clickPowerDisplay">1</span></p>
     <p>Auto-Clickers: <span id="autoCount">0</span></p>
+    <div id="clicker-container" style="position: relative; display: inline-block;"></div>
+
   </div>
 
   <script>
@@ -114,6 +137,24 @@
       totalClicks += clickPower;
       updateDisplay();
     }
+    function handleClick() {
+  addClick();
+  spawnFloatingClicker();
+}
+
+function spawnFloatingClicker() {
+  const container = document.getElementById('clicker-container');
+  const img = document.createElement('img');
+  img.src = "https://pf-a.github.io/dc/img/ok.jpg";
+  img.className = 'floating-click';
+  img.style.left = Math.random() * 100 + "px";
+  container.appendChild(img);
+
+  setTimeout(() => {
+    container.removeChild(img);
+  }, 1000);
+}
+
 
     function buyUpgrade(amount) {
       let cost = amount === 1 ? upgradeCost1 : upgradeCost5;
