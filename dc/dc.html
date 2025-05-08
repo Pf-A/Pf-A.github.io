@@ -74,13 +74,32 @@
     transform: translateY(-100px) scale(0.5);
   }
 }
+    .flying-child {
+  position: absolute;
+  width: 40px;
+  pointer-events: none;
+  animation: childFly 1.2s ease-out forwards;
+  z-index: 998;
+}
+
+@keyframes childFly {
+  0% {
+    opacity: 1;
+    transform: translateY(0px) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-150px) rotate(360deg);
+  }
+}
+
 
   </style>
 </head>
 <body>
 
   <h1>🫃Diddy clicker! 2🫃</h1>
-  <text>v3.0.0 [Automatic Updater: Enabled]</text>
+  <text>v4.2.0 [Automatic Updater: Enabled]</text>
   <h3>Made for albie, but shared with others. Built by Pf-A on github.</h3>
   <h2>Clicks: <span id="clicks">0</span></h2>
   
@@ -157,20 +176,21 @@ function spawnFloatingClicker() {
 
 
     function buyUpgrade(amount) {
-      let cost = amount === 1 ? upgradeCost1 : upgradeCost5;
-      if (clicks >= cost) {
-        clicks -= cost;
-        clickPower += amount;
-        if (amount === 1) {
-          upgradeCost1 = Math.floor(upgradeCost1 * 1.5);
-        } else {
-          upgradeCost5 = Math.floor(upgradeCost5 * 1.7);
-        }
-        updateDisplay();
-      } else {
-        alert("Not enough clicks!");
-      }
+  let cost = amount === 1 ? upgradeCost1 : upgradeCost5;
+  if (clicks >= cost) {
+    clicks -= cost;
+    clickPower += amount;
+    if (amount === 1) {
+      upgradeCost1 = Math.floor(upgradeCost1 * 1.5);
+    } else {
+      upgradeCost5 = Math.floor(upgradeCost5 * 1.7);
+      spawnFlyingChild(); // 🧒 Trigger the animation ONLY when buying "Children"
     }
+    updateDisplay();
+  } else {
+    alert("Not enough clicks!");
+  }
+}
 
     function buyAutoClicker() {
       if (clicks >= autoClickerCost) {
@@ -267,17 +287,30 @@ function spawnFloatingClicker() {
 
     setInterval(() => {
       let randomEvent = Math.random();
-      if (randomEvent < 0.1) {
+      if (randomEvent < 0.01) {
         alert("Random Event: Your click power has increased!");
         clickPower += 2;
         updateDisplay();
-      } else if (randomEvent < 0.2) {
+      } else if (randomEvent < 0.02) {
         alert("Random Event: The party's over... but you got 1000 extra clicks!");
         clicks += 1000;
         totalClicks += 1000;
         updateDisplay();
       }
     }, 10000);
+    function spawnFlyingChild() {
+  const container = document.getElementById('clicker-container');
+  const img = document.createElement('img');
+  img.src = "https://pf-a.github.io/dc/c.png"; // or any image you'd like
+  img.className = 'flying-child';
+  img.style.left = Math.random() * 120 + "px";
+  container.appendChild(img);
+
+  setTimeout(() => {
+    container.removeChild(img);
+  }, 1200);
+}
+
   </script>
 </body>
 </html>
