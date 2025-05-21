@@ -1,6 +1,6 @@
 // code here is not simplified, it is pulled directly from the original backup.
 const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d'); // here is where it throws the error
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
