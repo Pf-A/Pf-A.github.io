@@ -1,228 +1,367 @@
-// --- CONFIGURATION ---
-const config = {
-    floorHeight: 30,
-    player: {
-        x: 50,
-        width: 30,
-        height: 30,
-        speed: 5,
-        gravity: 0.5,
-        jumpStrength: 15
-    },
-    box: {
-        count: 15,
-        width: 60,
-        height: 20
-    },
-    enemy: {
-        width: 30,
-        height: 30,
-        speed: 2,
-        spawnInterval: 2000
-    },
-    laserFireRate: 10, // ms
-    crosshairSize: 10
-};
-// --- END CONFIGURATION ---
-function loadedMainJs() {
-  console.log('Loaded Main.js');
-}
-  
-
+// code here is not simplified, it is pulled directly from the original backup.
 const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-// Game variables
-let player = {
-    x: config.player.x,
-    y: canvas.height - config.floorHeight - config.player.height,
-    width: config.player.width,
-    height: config.player.height,
-    speed: config.player.speed,
-    gravity: config.player.gravity,
-    jumpStrength: config.player.jumpStrength,
-    velocityY: 0,
-    onGround: false
-};
+        const floorHeight = 30; // how high the floor is 
+        let player, enemies, enemyCount, defeatedCount, level, enemySpeed, enemySpawnInterval, gameStarted, gameOver;
+        let crosshair = { x: canvas.width / 2, y: canvas.height / 2, size: 10 };
+        let boxes = [];
+        let shootingInterval;   // not sure? maybe for laser
+        const laserFireRate = 10; // time in milliseconds between laser shots, 1 is very fast
+        let laserActive = false; // Track if the laser is currently firing
 
-let enemies = [];
-let enemyCount = 0;
-let defeatedCount = 0;
-let level = 1;
-let enemySpeed = config.enemy.speed;
-let enemySpawnInterval = config.enemy.spawnInterval;
-let gameStarted = false;
-let gameOver = false;
-
-let crosshair = { x: canvas.width / 2, y: canvas.height / 2, size: config.crosshairSize };
-let boxes = [];
-let shootingInterval;
-let laserActive = false;
-
-// Initialize boxes using config
-for (let i = 0; i < config.box.count; i++) {
-    boxes.push({
-        x: Math.random() * (canvas.width - config.box.width),
-        y: canvas.height - config.floorHeight - config.box.height,
-        width: config.box.width,
-        height: config.box.height
-    });
-}
-
-// --- GAME LOGIC ---
-
-function drawPlayer() {
-    ctx.fillStyle = 'blue';
-    ctx.fillRect(player.x, player.y, player.width, player.height);
-}
-
-function drawEnemies() {
-    ctx.fillStyle = 'red';
-    enemies.forEach(enemy => {
-        ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
-    });
-}
-
-function drawBoxes() {
-    ctx.fillStyle = 'brown';
-    boxes.forEach(box => {
-        ctx.fillRect(box.x, box.y, box.width, box.height);
-    });
-}
-
-function drawCrosshair() {
-    ctx.strokeStyle = 'green';
-    ctx.beginPath();
-    ctx.moveTo(crosshair.x - crosshair.size, crosshair.y);
-    ctx.lineTo(crosshair.x + crosshair.size, crosshair.y);
-    ctx.moveTo(crosshair.x, crosshair.y - crosshair.size);
-    ctx.lineTo(crosshair.x, crosshair.y + crosshair.size);
-    ctx.stroke();
-}
-
-function drawFloor() {
-    ctx.fillStyle = 'gray';
-    ctx.fillRect(0, canvas.height - config.floorHeight, canvas.width, config.floorHeight);
-}
-
-function spawnEnemy() {
-    enemies.push({
-        x: Math.random() * (canvas.width - config.enemy.width),
-        y: canvas.height - config.floorHeight - config.enemy.height,
-        width: config.enemy.width,
-        height: config.enemy.height,
-        speed: enemySpeed
-    });
-    enemyCount++;
-}
-
-function updatePlayer() {
-    player.velocityY += player.gravity;
-    player.y += player.velocityY;
-
-    // Floor collision
-    if (player.y + player.height >= canvas.height - config.floorHeight) {
-        player.y = canvas.height - config.floorHeight - player.height;
-        player.velocityY = 0;
-        player.onGround = true;
-    } else {
-        player.onGround = false;
-    }
-}
-
-function updateEnemies() {
-    enemies.forEach(enemy => {
-        enemy.x += (player.x < enemy.x ? -1 : 1) * enemy.speed;
-    });
-}
-
-function checkCollisions() {
-    enemies.forEach((enemy, i) => {
-        if (
-            player.x < enemy.x + enemy.width &&
-            player.x + player.width > enemy.x &&
-            player.y < enemy.y + enemy.height &&
-            player.y + player.height > enemy.y
-        ) {
-            gameOver = true;
+        function createBoxes() {    // make platforms
+            const boxCount = 15;    // dont change
+            const boxWidth = 60;    // dont change
+            const boxHeight = 20;   // dont change
+            boxes = [];
+            for (let i = 0; i < boxCount; i++) {
+                boxes.push({
+                    x: Math.random() * (canvas.width - boxWidth),
+                    y: canvas.height - (Math.random() * (canvas.height / 2)) - boxHeight,
+                    width: boxWidth,
+                    height: boxHeight
+                });
+            }
         }
-    });
-}
+        function resetGame() {
+            player = {
+                x: 50,
+                y: canvas.height - floorHeight - 30,
+                width: 30,    // dont change
+                height: 30,  // dont change
+                speed: 5,   // speed  5 is default
+                dy: 0,     // vertical speed
+                gravity: 0.5,      // gravity. default is 0.5
+                jumpStrength: 15,    // how powerful the jump is  default is 10 but 15 is good
+                jumping: false,    // make sure you are not jumping on game reset
+                bullets: [],    // ammo for non used game strategy?
+                weapon: 'basic'    // default weapon to start out 
+            //    backupto: 'https://thepuffinprogrammer.github.io/assets/js/server1.bin'
+            };
 
-function shootLaser() {
-    if (!laserActive) return;
-    // Remove enemy if crosshair is over it
-    enemies = enemies.filter(enemy => {
-        const hit = (
-            crosshair.x > enemy.x &&
-            crosshair.x < enemy.x + enemy.width &&
-            crosshair.y > enemy.y &&
-            crosshair.y < enemy.y + enemy.height
-        );
-        if (hit) defeatedCount++;
-        return !hit;
-    });
-}
+            enemies = [];     // not sure
+            enemyCount = 0;   // clears enemy counter
+            defeatedCount = 0;    // clears defeated counter
+            level = 1;    // resets level
+            enemySpeed = 2;   // enemy speed
+            enemySpawnInterval = 2000;   // how much time between enemy spawn (milliseconds)
 
-function gameLoop() {
-    if (!gameStarted || gameOver) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+            gameStarted = false;   // sets to false
+            gameOver = false;    // sets to false
+            laserActive = false;    // glitch for laser? 
+            clearInterval(shootingInterval);
+            document.getElementById('weaponUI').style.display = 'none';     // hide weapon ui
+            document.getElementById('gameOverScreen').style.display = 'none';  // hide game over
+        }
 
-    drawFloor();
-    drawBoxes();
-    drawPlayer();
-    drawEnemies();
-    drawCrosshair();
+        function startGame() {
+            resetGame();
+            gameStarted = true;   // changes
+            createBoxes();
+            document.getElementById('weaponUI').style.display = 'block';
+            document.getElementById('titleScreen').style.display = 'none'; // Hide title screen
+            setInterval(spawnEnemy, enemySpawnInterval);
+            update();
+        }
 
-    updatePlayer();
-    updateEnemies();
-    checkCollisions();
+        function spawnEnemy() {
+            const enemy = {
+                x: Math.random() * canvas.width,
+                y: 0,
+                width: 30,
+                height: 30,
+                speed: enemySpeed,
+                dy: 0,
+                jumping: false
+            };
+            enemies.push(enemy);
+            enemyCount++;
+        }
 
-    requestAnimationFrame(gameLoop);
-}
+        function update() {
+            if (!gameStarted || gameOver) return;
 
-function startGame() {
-    gameStarted = true;
-    gameOver = false;
-    enemies = [];
-    enemyCount = 0;
-    defeatedCount = 0;
-    level = 1;
-    enemySpeed = config.enemy.speed;
-    enemySpawnInterval = config.enemy.spawnInterval;
-    player.x = config.player.x;
-    player.y = canvas.height - config.floorHeight - config.player.height;
-    player.velocityY = 0;
-    player.onGround = false;
-    spawnEnemy();
-    setInterval(spawnEnemy, enemySpawnInterval);
-    gameLoop();
-}
+            // Move player
+            if (keys.right) player.x += player.speed;
+            if (keys.left) player.x -= player.speed;
+            if (keys.jump && !player.jumping) {
+                player.dy = -player.jumpStrength;
+                player.jumping = true;
+            }
 
-// --- INPUT HANDLING ---
-document.addEventListener('keydown', e => {
-    if (e.code === 'ArrowLeft') player.x -= player.speed;
-    if (e.code === 'ArrowRight') player.x += player.speed;
-    if (e.code === 'Space' && player.onGround) {
-        player.velocityY = -player.jumpStrength;
-        player.onGround = false;
-    }
-    if (e.code === 'Enter' && !gameStarted) startGame();
-});
+            player.dy += player.gravity;
+            player.y += player.dy;
 
-canvas.addEventListener('mousemove', e => {
-    crosshair.x = e.clientX;
-    crosshair.y = e.clientY;
-});
+            if (player.y + player.height >= canvas.height - floorHeight) {
+                player.y = canvas.height - floorHeight - player.height;
+                player.dy = 0;
+                player.jumping = false;
+            }
 
-canvas.addEventListener('mousedown', () => {
-    laserActive = true;
-    shootingInterval = setInterval(shootLaser, config.laserFireRate);
-});
+            boxes.forEach(box => {
+                if (
+                    player.x < box.x + box.width &&
+                    player.x + player.width > box.x &&
+                    player.y + player.height < box.y + box.height &&
+                    player.y + player.height + player.dy >= box.y
+                ) {
+                    player.y = box.y - player.height;
+                    player.dy = 0;
+                    player.jumping = false;
+                }
+            });
 
-canvas.addEventListener('mouseup', () => {
-    laserActive = false;
-    clearInterval(shootingInterval);
-});
+            if (player.x < 0) player.x = 0;
+            if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
+
+            player.bullets.forEach((bullet, index) => {
+                bullet.x += bullet.speedX;
+                bullet.y += bullet.speedY;
+
+                if (bullet.x > canvas.width || bullet.y < 0 || bullet.y > canvas.height) {
+                    player.bullets.splice(index, 1);
+                }
+
+                enemies.forEach((enemy, enemyIndex) => {
+                    if (
+                        bullet.x < enemy.x + enemy.width &&
+                        bullet.x + bullet.width > enemy.x &&
+                        bullet.y < enemy.y + enemy.height &&
+                        bullet.y + bullet.height > enemy.y
+                    ) {
+                        enemies.splice(enemyIndex, 1);
+                        player.bullets.splice(index, 1);
+                        defeatedCount++;
+                        checkLevelUp();
+                    }
+                });
+            });
+
+            enemies.forEach(enemy => {
+                enemy.dy += player.gravity;
+                enemy.y += enemy.dy;
+
+                // Enemy jump logic
+                if (!enemy.jumping && Math.random() < 0.01) {
+                    enemy.dy = -10;
+                    enemy.jumping = true;
+                }
+
+                // Check ground collision for enemies
+                if (enemy.y + enemy.height >= canvas.height - floorHeight) {
+                    enemy.y = canvas.height - floorHeight - enemy.height;
+                    enemy.dy = 0;
+                    enemy.jumping = false;
+                }
+
+                boxes.forEach(box => {
+                    if (
+                        enemy.x < box.x + box.width &&
+                        enemy.x + enemy.width > box.x &&
+                        enemy.y + enemy.height >= box.y &&
+                        enemy.y + enemy.height + enemy.dy >= box.y
+                    ) {
+                        enemy.y = box.y - enemy.height;
+                        enemy.dy = 0;
+                    }
+                });
+
+                // Move enemy towards the player
+                if (enemy.x < player.x) {
+                    enemy.x += enemy.speed;
+                } else {
+                    enemy.x -= enemy.speed;
+                }
+
+                // Check for player collision
+                if (
+                    enemy.x < player.x + player.width &&
+                    enemy.x + enemy.width > player.x &&
+                    enemy.y < player.y + player.height &&
+                    enemy.y + enemy.height > player.y
+                ) {
+                    gameOver = true;
+                    document.getElementById('gameOverScreen').style.display = 'block';
+                    updateHighScore(); // Update high score if necessary
+                }
+            });
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'green';
+            ctx.fillRect(0, canvas.height - floorHeight, canvas.width, floorHeight);
+
+            // Draw player
+            ctx.fillStyle = 'red';   // player color
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+
+            // Draw boxes
+            ctx.fillStyle = 'orange';  // box color
+            boxes.forEach(box => {
+                ctx.fillRect(box.x, box.y, box.width, box.height);
+            });
+
+            // Draw bullets
+            ctx.fillStyle = 'yellow';   // bullet color 
+            player.bullets.forEach(bullet => {
+                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+            });
+
+            // Draw enemies
+            ctx.fillStyle = 'blue';    // enemy color 
+            enemies.forEach(enemy => {
+                ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+            });
+
+            // Draw crosshair
+            ctx.fillStyle = 'green';   // crosshair color 
+            ctx.fillRect(crosshair.x - crosshair.size / 2, crosshair.y - crosshair.size / 2, crosshair.size, crosshair.size);
+
+            // Draw stats
+            ctx.fillStyle = 'black';
+            ctx.font = '20px Arial';
+            ctx.fillText(`Enemies Spawned: ${enemyCount}`, 10, 30);
+            ctx.fillText(`Enemies Defeated: ${defeatedCount}`, canvas.width - 150, 30);
+            ctx.fillText(`Level: ${level}`, canvas.width / 2 - 20, 30);
+
+            requestAnimationFrame(update);
+        }
+
+        function checkLevelUp() {
+            if (defeatedCount % 5 === 0) {
+                level++;
+                enemySpeed += 0.5;
+                console.log(`Level Up! You are now at Level ${level}.`);
+            }
+        }
+
+        let keys = { right: false, left: false, jump: false };
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'd') {
+                keys.right = true;
+                console.log('Right key pressed');
+            }
+            if (e.key === 'a') {
+                keys.left = true;
+                console.log('Left key pressed');
+            }
+            if (e.key === ' ') {
+                keys.jump = true;
+                console.log('Jump key pressed');
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (e.key === 'd') {
+                keys.right = false;
+                console.log('Right key released');
+            }
+            if (e.key === 'a') {
+                keys.left = false;
+                console.log('Left key released');
+            }
+            if (e.key === ' ') {
+                keys.jump = false;
+                console.log('Jump key released');
+            }
+        });
+
+        function shoot() {
+            const bulletWidth = 10;
+            const bulletHeight = 5;
+            const bulletSpeed = 10;
+            const bulletFired = 'true';  
+
+            const dx = crosshair.x - (player.x + player.width);
+            const dy = crosshair.y - (player.y + player.height / 4);
+            const angle = Math.atan2(dy, dx);
+            const speedX = bulletSpeed * Math.cos(angle);
+            const speedY = bulletSpeed * Math.sin(angle);
+
+            switch (player.weapon) {
+                case 'basic':  // basic gun code
+                    player.bullets.push({
+                        x: player.x + player.width,
+                        y: player.y + (player.height / 4),
+                        width: bulletWidth,
+                        height: bulletHeight,
+                        speedX: speedX,
+                        speedY: speedY
+                    });
+                    console.log('Shooting basic gun');
+                    break;
+                case 'laser':    // laser code for laser
+                    if (!laserActive) {
+                        laserActive = true; // Start firing
+                        shootingInterval = setInterval(() => {
+                            player.bullets.push({
+                                x: player.x + player.width,
+                                y: player.y + (player.height / 4),
+                                width: bulletWidth,
+                                height: bulletHeight,
+                                speedX: speedX,
+                                speedY: speedY
+                            });
+                            console.log('Shooting laser');
+                        }, laserFireRate);  
+                    } else {     // stop shooting laser 
+                        clearInterval(shootingInterval);
+                        shootingInterval = null;
+                        laserActive = false; // Stop firing laser 
+                        console.log('Stopped shooting laser');   
+                    }
+                    break;
+                case 'shotgun':   // shotgun logic 
+                    for (let i = -2; i <= 2; i++) {
+                        player.bullets.push({
+                            x: player.x + player.width,
+                            y: player.y + (player.height / 4),
+                            width: bulletWidth,
+                            height: bulletHeight,
+                            speedX: (bulletSpeed + i) * Math.cos(angle),
+                            speedY: (bulletSpeed + i) * Math.sin(angle)
+                        });
+                    }
+                    console.log('Shooting shotgun');
+                    break;
+            }
+        }
+
+        canvas.addEventListener('mousemove', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            crosshair.x = event.clientX - rect.left;
+            crosshair.y = event.clientY - rect.top;
+        });
+
+        canvas.addEventListener('click', shoot);
+
+        document.querySelectorAll('.weaponIndicator').forEach(indicator => {
+            indicator.addEventListener('click', () => {
+                player.weapon = indicator.id;
+                document.querySelectorAll('.weaponIndicator').forEach(i => i.classList.remove('selected'));
+                indicator.classList.add('selected');
+                console.log(`Weapon changed to: ${player.weapon}`);
+                if (player.weapon !== 'laser') {
+                    clearInterval(shootingInterval);
+                    shootingInterval = null;
+                    laserActive = false;
+                }
+            });
+        });
+
+        document.getElementById('startButton').addEventListener('click', startGame);
+        document.getElementById('restartButton').addEventListener('click', startGame);
+    
+    function consoleLocate() {
+       console.clear();
+       console.log('checking for updates...');
+       console.log('https://thepuffinassets.github.io/UJSBSG/ver/update/v1.13.4.5.UPDATE');
+       console.log('none found. checking cookies...')
+       console.log('highScore Found. reading...')
+       console.error('could not read 0x01010010')
+       }
+       
+       
