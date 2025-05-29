@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML Feature Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        section { margin-bottom: 2em; }
+        h2 { border-bottom: 1px solid #ccc; }
+        table, th, td { border: 1px solid #888; border-collapse: collapse; padding: 4px; }
+        .flex { display: flex; gap: 1em; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1em; }
+    </style>
+</head>
+<body>
+    <h1>HTML Feature Test</h1>
+
+    <section>
+        <h2>Text Elements</h2>
+        <p>This is a <strong>strong</strong>, <em>emphasized</em>, <u>underlined</u>, <mark>marked</mark>, <del>deleted</del>, and <ins>inserted</ins> text.</p>
+        <blockquote cite="https://www.example.com">This is a blockquote.</blockquote>
+        <pre>Preformatted
+            text
+        </pre>
+        <code>&lt;div&gt;Hello&lt;/div&gt;</code>
+        <br>
+        <abbr title="HyperText Markup Language">HTML</abbr>
+        <dfn>Definition</dfn>
+        <samp>Sample output</samp>
+        <kbd>Ctrl + S</kbd>
+    </section>
+
+    <section>
+        <h2>Headings</h2>
+        <h1>Heading 1</h1>
+        <h2>Heading 2</h2>
+        <h3>Heading 3</h3>
+        <h4>Heading 4</h4>
+        <h5>Heading 5</h5>
+        <h6>Heading 6</h6>
+    </section>
+
+    <section>
+        <h2>Lists</h2>
+        <ul>
+            <li>Unordered item</li>
+            <li>Another item</li>
+        </ul>
+        <ol>
+            <li>Ordered item</li>
+            <li>Second item</li>
+        </ol>
+        <dl>
+            <dt>Term</dt>
+            <dd>Definition</dd>
+        </dl>
+    </section>
+
+    <section>
+        <h2>Links & Images</h2>
+        <a href="https://www.example.com" target="_blank">External Link</a>
+        <img src="https://via.placeholder.com/100" alt="Placeholder image">
+        <figure>
+            <img src="https://via.placeholder.com/150" alt="Figure image">
+            <figcaption>Figure caption</figcaption>
+        </figure>
+    </section>
+
+    <section>
+        <h2>Tables</h2>
+        <table>
+            <caption>Sample Table</caption>
+            <thead>
+                <tr><th>Header 1</th><th>Header 2</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Cell 1</td><td>Cell 2</td></tr>
+                <tr><td>Cell 3</td><td>Cell 4</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Forms</h2>
+        <form>
+            <label for="text">Text:</label>
+            <input type="text" id="text" name="text"><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email"><br>
+            <label for="number">Number:</label>
+            <input type="number" id="number" name="number"><br>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date"><br>
+            <label><input type="checkbox" name="check"> Checkbox</label><br>
+            <label><input type="radio" name="radio"> Radio</label><br>
+            <label for="select">Select:</label>
+            <select id="select" name="select">
+                <option>Option 1</option>
+                <option>Option 2</option>
+            </select><br>
+            <textarea name="textarea" rows="2" cols="20">Textarea</textarea><br>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Media</h2>
+        <audio controls>
+            <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <br>
+        <video width="200" controls>
+            <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </section>
+
+    <section>
+        <h2>Semantic Elements</h2>
+        <header>Header section</header>
+        <nav>Navigation bar</nav>
+        <main>Main content</main>
+        <article>Article content</article>
+        <aside>Aside content</aside>
+        <footer>Footer section</footer>
+        <section>Nested section</section>
+    </section>
+
+    <section>
+        <h2>Layout</h2>
+        <div class="flex">
+            <div>Flex 1</div>
+            <div>Flex 2</div>
+            <div>Flex 3</div>
+        </div>
+        <div class="grid">
+            <div>Grid 1</div>
+            <div>Grid 2</div>
+            <div>Grid 3</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Other Elements</h2>
+        <details>
+            <summary>Details/summary</summary>
+            Hidden content here.
+        </details>
+        <progress value="70" max="100"></progress>
+        <meter value="0.6">60%</meter>
+        <br>
+        <output>Output</output>
+        <br>
+        <time datetime="2024-06-01">June 1, 2024</time>
+        <br>
+        <small>Small text</small>
+        <hr>
+        <address>123 Main St, City</address>
+    </section>
+</body>
+</html>
