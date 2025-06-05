@@ -1,5 +1,5 @@
         // --- Config ---
-        const COLS = 20, ROWS = 20, CELL = 20;
+        const COLS = 120, ROWS = 120, CELL = 120;
         // --- Level Data ---
         let level = Array.from({length: ROWS}, () => Array(COLS).fill(0)); // 0=empty, 1=wall
         // --- Snake Game State ---
