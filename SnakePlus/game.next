@@ -1,23 +1,23 @@
-/* === main.js === */
+// --- Config ---
+const COLS = 30, ROWS = 30, CELL = 20; // 30 x 20px = 600px
 
-if (typeof CONFIG === 'undefined') throw new Error("CONFIG not loaded. Make sure config.js is included first.");
+// --- Level Data ---
+let level = Array.from({ length: ROWS }, () => Array(COLS).fill(0)); // 0=empty, 1=wall
 
-const COLS = CONFIG.COLS;
-const ROWS = CONFIG.ROWS;
-const CELL = CONFIG.CELL;
-const CANVAS_SIZE = CONFIG.CANVAS_SIZE;
-
-let level = Array.from({length: ROWS}, () => Array(COLS).fill(0));
+// --- Snake Game State ---
 let snake, dir, food, running, gameInterval;
 
+// --- DOM ---
 const gameCanvas = document.getElementById('game');
 const gameCtx = gameCanvas.getContext('2d');
 const editorCanvas = document.getElementById('editor');
 const editorCtx = editorCanvas.getContext('2d');
 
-gameCanvas.width = editorCanvas.width = CANVAS_SIZE;
-gameCanvas.height = editorCanvas.height = CANVAS_SIZE;
+// Resize canvases to 600x600
+gameCanvas.width = editorCanvas.width = 600;
+gameCanvas.height = editorCanvas.height = 600;
 
+// --- Level Editor ---
 function showEditor() {
     clearInterval(gameInterval);
     gameCanvas.style.display = 'none';
@@ -26,7 +26,7 @@ function showEditor() {
 }
 
 function drawEditor() {
-    editorCtx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+    editorCtx.clearRect(0, 0, 600, 600);
     for (let y = 0; y < ROWS; y++) {
         for (let x = 0; x < COLS; x++) {
             if (level[y][x] === 1) {
@@ -49,6 +49,7 @@ editorCanvas.addEventListener('click', e => {
     }
 });
 
+// --- Save/Load ---
 function saveLevel() {
     localStorage.setItem('snake_level', JSON.stringify(level));
     alert('Level saved!');
@@ -63,14 +64,15 @@ function loadLevel() {
     }
 }
 
+// --- Snake Game ---
 function startGame() {
     editorCanvas.style.display = 'none';
     gameCanvas.style.display = 'block';
-    snake = [{x: 10, y: 10}];
-    dir = {x: 1, y: 0};
+    snake = [{ x: 10, y: 10 }];
+    dir = { x: 1, y: 0 };
     running = true;
     placeFood();
-    gameInterval = setInterval(gameLoop, CONFIG.TICK_RATE);
+    gameInterval = setInterval(gameLoop, 100);
 }
 
 function placeFood() {
@@ -78,13 +80,18 @@ function placeFood() {
     for (let y = 0; y < ROWS; y++)
         for (let x = 0; x < COLS; x++)
             if (!snake.some(s => s.x === x && s.y === y) && level[y][x] === 0)
-                empty.push({x, y});
+                empty.push({ x, y });
     food = empty[Math.floor(Math.random() * empty.length)];
 }
 
 function gameLoop() {
-    let head = {x: snake[0].x + dir.x, y: snake[0].y + dir.y};
-    if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS || level[head.y][head.x] === 1 || snake.some(s => s.x === head.x && s.y === head.y)) {
+    let head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+    if (
+        head.x < 0 || head.x >= COLS ||
+        head.y < 0 || head.y >= ROWS ||
+        level[head.y][head.x] === 1 ||
+        snake.some(s => s.x === head.x && s.y === head.y)
+    ) {
         running = false;
         clearInterval(gameInterval);
         alert('Game Over!');
@@ -100,7 +107,7 @@ function gameLoop() {
 }
 
 function drawGame() {
-    gameCtx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+    gameCtx.clearRect(0, 0, 600, 600);
     for (let y = 0; y < ROWS; y++)
         for (let x = 0; x < COLS; x++)
             if (level[y][x] === 1) {
@@ -115,10 +122,15 @@ function drawGame() {
     }
 }
 
+// --- Controls ---
 document.addEventListener('keydown', e => {
     if (!running) return;
-    if (e.key === 'ArrowUp' && dir.y !== 1) dir = {x: 0, y: -1};
-    else if (e.key === 'ArrowDown' && dir.y !== -1) dir = {x: 0, y: 1};
-    else if (e.key === 'ArrowLeft' && dir.x !== 1) dir = {x: -1, y: 0};
-    else if (e.key === 'ArrowRight' && dir.x !== -1) dir = {x: 1, y: 0};
+    if (e.key === 'ArrowUp' && dir.y !== 1) dir = { x: 0, y: -1 };
+    else if (e.key === 'ArrowDown' && dir.y !== -1) dir = { x: 0, y: 1 };
+    else if (e.key === 'ArrowLeft' && dir.x !== 1) dir = { x: -1, y: 0 };
+    else if (e.key === 'ArrowRight' && dir.x !== -1) dir = { x: 1, y: 0 };
 });
+
+// --- Init ---
+showEditor();
+
