@@ -6,4 +6,5 @@ const CANVAS_SIZE = CONFIG.CANVAS_SIZE;
 
 // --- Canvas Size ---
 gameCanvas.width = editorCanvas.width = CANVAS_SIZE;
+// edit1
 gameCanvas.height = editorCanvas.height = CANVAS_SIZE;
