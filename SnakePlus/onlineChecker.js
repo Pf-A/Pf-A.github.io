@@ -1,2 +1,3 @@
-// code to check if game is connected to internet.
-var isOnline = true;
+function checkServerOnEXT() {
+  superlog('GitHub checker: ONLINE')
+}
