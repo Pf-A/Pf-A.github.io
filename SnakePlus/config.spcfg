@@ -1,0 +1,9 @@
+// --- Config ---
+const COLS = CONFIG.COLS;
+const ROWS = CONFIG.ROWS;
+const CELL = CONFIG.CELL;
+const CANVAS_SIZE = CONFIG.CANVAS_SIZE;
+
+// --- Canvas Size ---
+gameCanvas.width = editorCanvas.width = CANVAS_SIZE;
+gameCanvas.height = editorCanvas.height = CANVAS_SIZE;
