@@ -1,0 +1,38 @@
+body {
+                background-color: white;
+                color: white;
+                font-family: Arial, sans-serif;
+                /*text-align: center; */
+            }
+            #logo {
+                width: 300px;
+                margin-top: 20px;
+            }
+            #controls {
+                margin-top: 20px;
+            }
+            button {
+                margin: 5px;
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+            .disabled {
+                background-color: gray;
+                color: white;
+                cursor: not-allowed;
+            }
+            p {
+                color: black;
+                font-size: 18px;
+            }
+            html, body {
+                overflow: hidden;
+                height: 100%;
+            }
+            canvas {
+                border: 1px solid black;
+            }
+            #online-status {
+                color: green;
+                font-weight: bold;
+            }
