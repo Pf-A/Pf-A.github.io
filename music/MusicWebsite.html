@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mikes Music Site</title>
+    <script src="https://Pf-A.github.io/music/js/charts.js"></script>
+    <script src="https://Pf-A.github.io/music/js/lists.js"></script>
+    <script src="https://Pf-A.github.io/music/js/extras.js"></script>
+    <script src="https://Pf-A.github.io/Solenoid/solenoid-ini.js"></script>
+    <script src="https://Pf-A.github.io/Solenoid/solenoid.js"></script>
+    <script src="https://Pf-A.github.io/ac/antiCopyright.js"></script>
+    <script>
+        // code that runs when page is loaded, based off of MS-DOS's autoexec.bat file.
+        // This is inline, so that this does not need internet access to load the script, but the entire thing still needs internet access to load the CSS and JS files.
+        // If there is an error loading the CSS or JS files, it will show a warning in the console. It will not show a warning on the page. 
+        // it will throw a warning if internet access is not available.
+        // some functions are commented out, for parity. (and bug finding.) {and because I broke them.}
+        function autoexec() {
+            setTimeout(() => {
+            // console.clear()
+            document.getElementById("consoleWarning").style.display = "none";
+            document.getElementById("benefits").style.display = "block";
+            showBenefits(); // Show benefits by default
+            showChart1(); // Show chart1 by default
+            loadedCharts();
+            loadedLists();
+            loadedCopyright();
+            setTimeout(() => {
+                loadedSolenoidINI();
+                loadedExtras();
+                console.log('Loaded CSS');
+                // detectRecording();
+            console.log('Page loaded successfully.');
+            }, 1000);
+            // loadedSolenoidINI();
+            // loadedSolenoid(); // Uncomment if you want to load Solenoid
+                    }, 100);
+        }
+      </script>
+      <script>
+        // anti copyright code goes here, but i made it so that it is not inline so that it can be loaded from the internet.
+      </script>
+
+      
+      <link rel="stylesheet" href="https://Pf-A.github.io/music/css/main.css">
+
+</head>
+<body onload="autoexec()">
+    <div class="main-veiw-container"> <!--main container for veiwport things. add for sans mode, and other reasons. click "main-view-container.display.none"-->
+    <FONT color="black">
+    <div class="centered-content">
+        <h1>Mikes Music site!</h1>
+        <h3><i>"EFFORT CENTRAL!"</i></h3>
+
+        <div class="mar"> 
+            <marquee>Hello and welcome to my amazing looking website about why music should be allowed in schools! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built in BARE HTML!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Made by Michael Carlson. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EST 2025!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hello and welcome to my amazing looking website about why music should be allowed in schools! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built in BARE HTML!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Made by Michael Carlson. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EST 2025!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hello and welcome to my amazing looking website about why music should be allowed in schools! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built in BARE HTML!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Made by Michael Carlson. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EST 2025!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hello and welcome to my amazing looking website about why music should be allowed in schools! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built in BARE HTML!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Made by Michael Carlson. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EST 2025!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hello and welcome to my amazing looking website about why music should be allowed in schools! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built in BARE HTML!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Made by Michael Carlson. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EST 2025!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hello and welcome to my amazing looking website about why music should be allowed in schools! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built in BARE HTML!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Made by Michael Carlson. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EST 2025!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hello and welcome to my amazing looking website about why music should be allowed in schools! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built in BARE HTML!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Made by Michael Carlson. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EST 2025!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hello and welcome to my amazing looking website about why music should be allowed in schools! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built in BARE HTML!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Made by Michael Carlson. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EST 2025!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hello and welcome to my amazing looking website about why music should be allowed in schools! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built in BARE HTML!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Made by Michael Carlson. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EST 2025!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hello and welcome to my amazing looking website about why music should be allowed in schools! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built in BARE HTML!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Made by Michael Carlson. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EST 2025!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hello and welcome to my amazing looking website about why music should be allowed in schools! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built in BARE HTML!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Made by Michael Carlson. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EST 2025!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hello and welcome to my amazing looking website about why music should be allowed in schools! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Built in BARE HTML!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Made by Michael Carlson. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EST 2025!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</marquee>
+        </div>
+
+        <div class="navbar">
+            <div class="bar">
+            <span>You are here: > </span>
+            
+            <button class="fbutton">Home</button>
+        
+            <a href="#"><button class=fbutton onclick="notref()">Sources I used</button></a>
+            <a href="https://github.com/ThePuffinProgrammer/ThePuffinProgrammer.github.io"><button class=fbutton>To where I get the images</button></a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"><button class=fbutton>Roll</button></a>
+            <a href="https://forms.gle/aJrqatXrQudYFGaX7"><button class=fbutton>Go to the survey!</button></a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"><button class=fbutton>Email me</button></a>
+            </div>
+            <br>
+            
+        <blink> <h1 id="consoleWarning">General Error: Please check console.</h1></blink>
+
+        <section>
+            <nav>
+                <ul>
+                    <li><button class=fbutton onclick="showBenefits()">Benefits of listening to music while working</button></li>
+                    <li><button class=fbutton class="disabled" onclick="//showDrawbacks">General drawbacks</button></li>
+                    <li><button class=fbutton class=disabled onclick="//showFAQs">FAQs</button></li>
+                </ul>
+            </nav>
+            <article>
+                <div class="benefits" id="benefits">
+                    <h1>Benefits!</h1>
+                    <p> Listening to music while working can boost productivity, improve focus, and enhance mood. It can help reduce stress and make repetitive tasks feel more enjoyable. For some people, music—especially instrumental or ambient tracks—can block out distractions and create a flow state, making it easier to concentrate. However, the benefits vary depending on the type of work and personal preferences..</p>
+                    <p>Future Mike: add some more music things here.</p>
+                </div>
+                <div class="drawbacks" id="drawbacks">
+                    <h1>Drawbacks :(</h1>
+                    <p>Future Mike: replace with music drawbacks later.</p>
+                    <p>Future Mike: add some more music things here.</p>
+                </div>
+                <div class="FAQs" id="FAQs">
+                    <h1>FAQs</h1>
+                    <p>Future Mike: replace with music FAQs later.</p>
+                    <p>Future Mike: add some more music things here.</p>
+                </div>
+            </article>
+            <nav>
+                <ul>
+                    <a href=https://www.bartonplantsale.com><img src="https://thepuffinprogrammer.github.io/bps.jpeg" alt="Advertisement"> </a>
+                </ul>
+            </nav>
+        </section>
+        <footer>
+            <br><text> Keep going down! </text><br><br>
+        </footer>
+        <section>
+            <nav>
+                <ul>
+                    <p>Click the buttons!</p>
+                    <li><button class=fbutton onclick="showChart1()">Do people actually listen to music when working?</button></li>
+                    <li><button class=fbutton onclick="showChart2()">Do people get better grades?</button></li>
+                    <li><button class=fbutton onclick="showChart3()">Do people agree with the rule of no headphones?</button></li>
+                    <li><button class=fbutton onclick="showChart4()">Should we listen to music anytime?</button></li>
+                    <li><button class=fbutton onclick="showChart5()">skibcheesechart</button></li>
+                </ul>
+            </nav>
+            <article>
+                <div class="benefits" id="chart1">
+                    <h1>Do people listen to music while working?</h1>
+                    <img src="https://pf-a.github.io/chart1.png">
+                    <p>Well, from the charts, people do.</p>
+                </div>
+                <div class="drawbacks" id="chart2">
+                    <h1>The grade diffrences from listening to music.</h1>
+                    <img src="https://pf-a.github.io/chart2.png">
+                    <p>82% of people get better grades with music.</p>
+                </div>
+                <div class="FAQs" id="chart3">
+                    <h1>How many people agree with the rule of no headphones in class?</h1>
+                    <img src="https://pf-a.github.io/chart3.png">
+                    <p>Clearly, 97% of people disagree with the rule.</p>
+                </div>
+                <div class="FAQs" id="chart4">
+                    <h1>Should we be able to listen to music ANYTIME?</h1>
+                    <img src="https://pf-a.github.io/chart4.png">
+                    <p>Answers seem valid so...</p>
+                </div>
+                <div class="FAQs" id="chart5">
+                    <h1>Have the people that filled this out visited skib cheese? </h1>
+                    <img src="https://pf-a.github.io/chart5.png">
+                    <p>I did deploy this on skib cheese... (if you dont know what skib cheese is, just click <a href=https://pf-a.github.io/skibCheeseRedirect.html>Here</a>.)</p>
+                </div>
+            </article>
+            <nav>
+                <img class="ad2" src="https://pf-a.github.io/music/img/ad2.png" alt="Advertisement">
+                </nav>
+        </section>
+        <footer>
+            <p>Copyright &copy; 2025 Michael Carlson</p>
+            <p>All rights reserved.</p>
+            <text>Analytics powered by Solenoid®</text>
+                <div class="solenoid-logo-container" id="solenoid-logo-container">
+            <img class=simg src="https://pf-a.github.io/Solenoid/solenoid-removebg-preview.png" alt="Solenoid Logo" class="solenoid-logo">            
+            <div class="analyticsInfo">
+                <text>This website uses Solenoid&COPY; for analytics. this just collects the time of the visit. </text>
+                <button class=fbutton onclick="hideWarn()">Accept</button>
+                </div>      
+            </div>
+    </div>'
+    <div class="bar">
+        <button onclick="secret1()" class="hacker">s1_element</button> 
+<button onclick="forceShow()" class="hacker">Force Element</button>
+<button onclick="alert('Killing Solenoid...');   document.getElementById('solenoid-logo-container').style.display = 'none'; console.log('Solenoid has ended.')" class="hacker">Kill Solenoid</button>
+<button onclick="enableDev()" class="hacker">Developer Mode</button>
+<button onclick="console.clear()" class="hacker">Clear Console</button>
+<button onclick="document.getElementById('consoleWarning').style.display = 'block'; console.error('ERROR: BLOCKED BY CHROME! PLEASE ENABLE EXTERNAL VOLUME MOUNTING IN CHROME`S SETTInGS!')" class="hacker">Mount External Volume For External Stylesheet/Script (js)</button>
+<button onclick="(function() {document.body.style.fontFamily = 'Comic Sans MS, Comic Sans, cursive';})();" class="hacker">sans_mode</button>
+<button onclick="document.getElementById('main-veiw-container').style.display = 'none'; console.log('Main view container hidden.');" class="hacker">Hide Main View</button>
+</div>
+</div>'
+</body>
+</FONT>
+</center>
+</html>
+</FONT> <!-- Removed invalid <center> closing tag -->
+</div>
