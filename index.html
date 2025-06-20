@@ -32,6 +32,22 @@
     </style>
     
   </head>
+	<script>
+  document.addEventListener("mousemove", function(e) {
+    const trail = document.createElement("div");
+    trail.style.position = "absolute";
+    trail.style.left = e.pageX + "px";
+    trail.style.top = e.pageY + "px";
+    trail.style.width = "6px";
+    trail.style.height = "6px";
+    trail.style.borderRadius = "50%";
+    trail.style.backgroundColor = "hsl(" + Math.random()*360 + ", 100%, 60%)";
+    trail.style.pointerEvents = "none";
+    trail.style.zIndex = "9999";
+    document.body.appendChild(trail);
+    setTimeout(() => trail.remove(), 500);
+  });
+</script>
   <body>
 	  <audio autoplay loop style="display:none;">
   <source src="index/bu-offensive-birds.mp3" type="audio/mpeg">
