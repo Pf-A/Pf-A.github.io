@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Guestbook</title>
+  <style>
+    body {
+      background: #f4e8d4;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .book {
+      width: 80%;
+      max-width: 900px;
+      height: 600px;
+      display: flex;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff8e1;
+    }
+
+    .page {
+      flex: 1;
+      padding: 40px;
+      box-sizing: border-box;
+      border-right: 2px dashed #d4c1a3;
+      overflow-y: auto;
+    }
+
+    .page:last-child {
+      border-right: none;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-top: 0;
+    }
+
+    .entry {
+      margin-bottom: 20px;
+    }
+
+    .entry strong {
+      color: #8b5e3c;
+    }
+
+    form input, form textarea, form button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-family: inherit;
+      border: 1px solid #ccc;
+      background: #fffaf0;
+    }
+
+    form button {
+      background-color: #8b5e3c;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #a06a4a;
+    }
+
+    .fake-entries .entry:nth-child(odd) {
+      color: #444;
+    }
+
+    .fake-entries .entry:nth-child(even) {
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="book">
+    <div class="page fake-entries">
+      <h1>Previous Guests</h1>
+      <div class="entry"><strong>Ashley:</strong> Love the retro vibes!</div>
+      <div class="entry"><strong>Jordan:</strong> Brings me back to 1998. Great job!</div>
+      <div class="entry"><strong>Chris:</strong> The background is wild, I love it.</div>
+      <div class="entry"><strong>Sky:</strong> 🔥🔥🔥</div>
+      <div class="entry"><strong>River:</strong> This site rules 🤘</div>
+      <div id="guestbook-entries"></div>
+    </div>
+    <div class="page">
+      <h1>Sign the Guestbook</h1>
+      <form onsubmit="saveMessage(); return false;">
+        <input type="text" id="name" placeholder="Your name" required>
+        <textarea id="message" placeholder="Your message" rows="4" required></textarea>
+        <button type="submit">Sign Guestbook</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function saveMessage() {
+      let name = document.getElementById("name").value;
+      let msg = document.getElementById("message").value;
+      let entry = `<div class="entry"><strong>${name}:</strong> ${msg}</div>`;
+      let current = localStorage.getItem("guestbook") || "";
+      localStorage.setItem("guestbook", current + entry);
+      document.getElementById("name").value = "";
+      document.getElementById("message").value = "";
+      showMessages();
+    }
+
+    function showMessages() {
+      document.getElementById("guestbook-entries").innerHTML = localStorage.getItem("guestbook") || "";
+    }
+
+    showMessages();
+  </script>
+</body>
+</html>
