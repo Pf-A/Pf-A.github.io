@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mikes Portfolio</title>
+    <link rel="icon" href="https://pf-a.github.io/p/favicon.png" type="image/png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .portfolio-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .portfolio-item {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            margin-bottom: 32px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+        .portfolio-item:nth-child(even) {
+            flex-direction: row-reverse;
+            margin-left: 60px;
+        }
+        .portfolio-item:nth-child(odd) {
+            margin-right: 60px;
+        }
+        .portfolio-image {
+            flex: 0 0 200px;
+            height: 140px;
+            overflow: hidden;
+        }
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 0 0 0 0;
+        }
+        .portfolio-desc {
+            flex: 1;
+            padding: 24px;
+        }
+        .portfolio-desc h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .portfolio-desc p {
+            margin: 0;
+            color: #555;
+        }
+        @media (max-width: 700px) {
+            .portfolio-item, .portfolio-item:nth-child(even) {
+                flex-direction: column;
+                margin: 0 0 24px 0;
+            }
+            .portfolio-item {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            .portfolio-image {
+                width: 100%;
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-top: 20px;">Mike's Programming and other things portfolio</h1>
+    <p style="text-align: center; color: #666;">A collection of my projects, games, and other stuff I made.</p>
+    <p style="text-align: center; color: #666;">In order from Most interesting to "Why am I here?"</p>
+    <div class="portfolio-container">
+        <!-- Portfolio Item 1 -->
+        <div class="portfolio-item">
+            <div class="portfolio-image">
+                <a href="https://pf-a.github.io/sc">
+                    <!--<img src="https://pf-a.github.io/p/img/skibcheese_pf.png" alt="Project 1"> -->
+                    <img src="https://pf-a.github.io/p/img/skibcheese_pf.png" alt="Project 1" style="display: block;">
+                </a>
+            </div>
+            <div class="portfolio-desc">
+                <h3>Skib cheese (2)</h3>
+                <p>The kinda social media thing I made, and it became HUGE.</p>
+            </div>
+        </div>
+        <!-- Portfolio Item 2 -->
+        <div class="portfolio-item">
+            <div class="portfolio-image">
+                <a href="Please add later, when it is deployed." target="_blank">
+                    <img src="https://pf-a.github.io/SnakePlus/snakeplus.png" alt="Project 2">
+                </a>
+            </div>
+            <div class="portfolio-desc">
+                <h3>SnakePlus</h3>
+                <p>A little game I made. Check it out! (in alpha phase)</p>
+            </div>
+        </div>
+        <!-- Portfolio Item 3 -->
+        <div class="portfolio-item">
+            <div class="portfolio-image">
+                <a href="https://pf-a.github.io/SuperLogger/superlogger.js" target="_blank">
+                    <img src="https://pf-a.github.io/404-image.png" alt="Project 3">
+                </a>
+            </div>
+            <div class="portfolio-desc">
+                <h3>SuperLogger!</h3>
+                <p>A console.log mod that just makes it easier to debug.</p>
+            </div>
+        </div>
+        <!-- Portfolio Item 4 -->
+        <div class="portfolio-item">
+            <div class="portfolio-image">
+                <a href="mailto:mcar3101@mpsedu.org" target="_blank">
+                    <img src="https://pf-a.github.io/p/img/blu.png" alt="Project 4">
+                </a>
+            </div>
+            <div class="portfolio-desc">
+                <h3>UBJS (Untitled Block Javascript Shooter)</h3>
+                <p>A game I made a while ago. Does not work, but email me if you want the source code.</p>
+            </div>
+        </div>
+        <!-- Portfolio Item 5 -->
+        <div class="portfolio-item">
+            <div class="portfolio-image">
+                <a href="https://pf-a.github.io/music/MusicWebsite.html" target="_blank">
+                    <img src="https://via.placeholder.com/200x140?text=Project+5" alt="">
+                </a>
+            </div>
+            <div class="portfolio-desc">
+                <h3>MusicWebsite!</h3>
+                <p>A thing I built for school. Hand coded.</p>
+            </div>
+        </div>
+        <!-- Portfolio Item 6 -->
+        <div class="portfolio-item">
+            <div class="portfolio-image">
+                <iframe src="https://pf-a.github.io" style="width: 200px; height: 140px; border: none;"></iframe>
+                </a>
+            </div>
+            <div class="portfolio-desc">
+                <h3>my actual website</h3>
+                <p>Spent some time making it look old.</p>
+            </div>
+        </div>
+        <!-- Portfolio Item 7 -->
+        <div class="portfolio-item">
+            <div class="portfolio-image">
+                <a href="https://pf-a.github.io/404image.png" target="_blank">
+                    <img src="https://pf-a.github.io/404-image.png" alt="Project 7">
+                </a>
+            </div>
+            <div class="portfolio-desc">
+                <h3>Solenoid</h3>
+                <p>broken analytics manager I made.</p>
+            </div>
+        </div>
+        <!-- havent built that many projects yet, so here are some more placeholders
+  
+        <div class="portfolio-item">
+            <div class="portfolio-image">
+                <a href="https://example.com/project8" target="_blank">
+                    <img src="https://via.placeholder.com/200x140?text=Project+8" alt="Project 8">
+                </a>
+            </div>
+            <div class="portfolio-desc">
+                <h3>Project Title 8</h3>
+                <p>Short description of what this project does or why it's cool.</p>
+            </div>
+        </div>
+        <div class="portfolio-item">
+            <div class="portfolio-image">
+                <a href="https://example.com/project9" target="_blank">
+                    <img src="https://via.placeholder.com/200x140?text=Project+9" alt="Project 9">
+                </a>
+            </div>
+            <div class="portfolio-desc">
+                <h3>Project Title 9</h3>
+                <p>Short description of what this project does or why it's cool.</p>
+            </div>
+        </div>
+       
+        <div class="portfolio-item">
+            <div class="portfolio-image">
+                <a href="https://example.com/project10" target="_blank">
+                    <img src="https://via.placeholder.com/200x140?text=Project+10" alt="Project 10">
+                </a>
+            </div>
+            <div class="portfolio-desc">
+                <h3>Project Title 10</h3>
+                <p>Short description of what this project does or why it's cool.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>-->
