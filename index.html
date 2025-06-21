@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <html>
   <head>
+	  <link rel="stylesheet" href="index/main.css">
     <style>
-      .bar {
-        border: 2px solid black;
-    }
+	    button {
+  font-family: inherit;
+  border: none;
+  outline: 1px dotted rgb(37, 37, 37);
+  outline-offset: -4px;
+  cursor: pointer;
+  background: hsl(0deg 0% 75%);
+  box-shadow:
+    inset -1px -1px #292929,
+    inset 1px 1px #fff,
+    inset -2px -2px rgb(158, 158, 158),
+    inset 2px 2px #ffffff;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 5px 30px;
+}
 
-      @font-face {
-  font-family: 'cool';
-  src: url('https://pf-a.github.io/index/fonts/cool.ttf') format('truetype');
+button:active {
+  box-shadow:
+    inset -1px -1px #fff,
+    inset 1px 1px #292929,
+    inset -2px -2px #ffffff,
+    inset 2px 2px rgb(158, 158, 158);
 }
-      h1, h3 {
-  font-family: 'cool', sans-serif;
-        color: hotpink;
-      text-shadow: 2px 2px cyan;
-}
-      body {
-  background-image: url('https://pf-a.github.io/index/images/old.jpeg');
-  background-repeat: repeat;
-  background-color: black; /* fallback */
-}
-     h1, p {
-  background-color: yellow; /* or another retro color */
-  color: black;
-  display: inline;
-  padding: 2px 4px;
-}
-	    h1 {
-		    font-size: 64px;
-	    }
     </style>
+	  <script>
+        function showDiv(num) {
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById('div' + i).className = 'content hidden';
+            }
+            document.getElementById('div' + num).className = 'content visible';
+        }
+    </script>
     
   </head>
 	<script>
