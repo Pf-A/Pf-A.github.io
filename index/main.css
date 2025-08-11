@@ -18,17 +18,17 @@
         color: hotpink;
       text-shadow: 2px 2px cyan;
 }
-      body {
+   /*   body {
   background-image: url('https://pf-a.github.io/index/images/old.jpeg');
   background-repeat: repeat;
-  background-color: black; /* fallback */
-}
-     h1, p {
-  background-color: yellow; /* or another retro color */
+  background-color: black; /* fallback 
+} */
+     /*h1, p {
+  background-color: yellow; /* or another retro color 
   color: black;
   display: inline;
   padding: 2px 4px;
-}
+}*/
 	    h1 {
 		    font-size: 64px;
 	    }
