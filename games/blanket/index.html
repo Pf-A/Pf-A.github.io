@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blanket Sandbox</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: black; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+
+let spacing = 50;
+let pullRadius = 100;
+let points = [];
+
+let player = { x: 0, y: 0, speed: 5, r: 15 };
+
+let obstacles = [];
+let chunkX = 0, chunkY = 0;
+let cols, rows;
+
+// Track input
+let keys = {};
+window.addEventListener("keydown", e => keys[e.key] = true);
+window.addEventListener("keyup", e => keys[e.key] = false);
+
+function initGrid() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  cols = Math.floor(canvas.width / spacing);
+  rows = Math.floor(canvas.height / spacing);
+
+  points = [];
+  for (let y = 0; y <= rows; y++) {
+    for (let x = 0; x <= cols; x++) {
+      let px = x * spacing;
+      let py = y * spacing;
+      points.push({ ox: px, oy: py, x: px, y: py });
+    }
+  }
+}
+
+function generateObstacles() {
+  obstacles = [];
+  let num = 5 + Math.floor(Math.random() * 5);
+  for (let i = 0; i < num; i++) {
+    obstacles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: 30 + Math.random() * 40
+    });
+  }
+}
+
+function updatePlayer() {
+  if (keys["ArrowUp"] || keys["w"]) player.y -= player.speed;
+  if (keys["ArrowDown"] || keys["s"]) player.y += player.speed;
+  if (keys["ArrowLeft"] || keys["a"]) player.x -= player.speed;
+  if (keys["ArrowRight"] || keys["d"]) player.x += player.speed;
+
+  // Screen transitions
+  if (player.x < 0) {
+    chunkX--; player.x += canvas.width;
+    initGrid(); generateObstacles();
+  }
+  if (player.x > canvas.width) {
+    chunkX++; player.x -= canvas.width;
+    initGrid(); generateObstacles();
+  }
+  if (player.y < 0) {
+    chunkY--; player.y += canvas.height;
+    initGrid(); generateObstacles();
+  }
+  if (player.y > canvas.height) {
+    chunkY++; player.y -= canvas.height;
+    initGrid(); generateObstacles();
+  }
+}
+
+function animate() {
+  updatePlayer();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.strokeStyle = "white";
+  ctx.beginPath();
+
+  for (let y = 0; y <= rows; y++) {
+    for (let x = 0; x <= cols; x++) {
+      let i = y * (cols + 1) + x;
+      let p = points[i];
+
+      // Relax back
+      p.x += (p.ox - p.x) * 0.05;
+      p.y += (p.oy - p.y) * 0.05;
+
+      // --- Player bulge (under blanket) ---
+      let dx = p.x - player.x;
+      let dy = p.y - player.y;
+      let dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < pullRadius) {
+        let force = (pullRadius - dist) * 0.3;
+        p.x += dx / dist * force;
+        p.y += dy / dist * force;
+      }
+
+      // --- Obstacle bulge (on top of blanket) ---
+      for (let ob of obstacles) {
+        let dx2 = p.x - ob.x;
+        let dy2 = p.y - ob.y;
+        let dist2 = Math.sqrt(dx2*dx2 + dy2*dy2);
+        if (dist2 < ob.r) {
+          let force2 = (ob.r - dist2) * 0.2;
+          p.x -= dx2 / dist2 * force2; // push opposite way
+          p.y -= dy2 / dist2 * force2;
+        }
+      }
+
+      // Draw horizontal lines
+      if (x < cols) {
+        let p2 = points[i + 1];
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p2.x, p2.y);
+      }
+      // Draw vertical lines
+      if (y < rows) {
+        let p2 = points[i + (cols + 1)];
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p2.x, p2.y);
+      }
+    }
+  }
+  ctx.stroke();
+
+  // Player under blanket = invisible
+  // (debug: uncomment below if you want to see)
+  // ctx.beginPath();
+  // ctx.arc(player.x, player.y, player.r, 0, Math.PI*2);
+  // ctx.fillStyle = "red";
+  // ctx.fill();
+
+  // Draw obstacles (optional: dark blobs)
+  ctx.fillStyle = "gray";
+  for (let ob of obstacles) {
+    ctx.beginPath();
+    ctx.arc(ob.x, ob.y, ob.r * 0.5, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  requestAnimationFrame(animate);
+}
+
+// Start
+initGrid();
+generateObstacles();
+player.x = canvas.width / 2;
+player.y = canvas.height / 2;
+animate();
+
+</script>
+</body>
+</html>
