@@ -3,163 +3,294 @@
 <head>
   <title>Blanket Sandbox</title>
   <style>
-    body { margin: 0; overflow: hidden; background: black; }
+    body { margin: 0; overflow: hidden; background: black; font-family: sans-serif; }
     canvas { display: block; }
+
+    #settingsBtn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #444;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+      z-index: 10;
+    }
+
+    #settingsPopup {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 320px;
+      background: rgba(20,20,20,0.95);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+      z-index: 20;
+    }
+
+    #settingsPopup h2 {
+      margin-top: 0;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    #settingsPopup label {
+      display: block;
+      margin: 8px 0;
+    }
+
+    #settingsPopup input[type=range] {
+      width: 100%;
+    }
+
+    #settingsPopup button {
+      display: block;
+      margin: 15px auto 0;
+      padding: 8px 16px;
+      background: #666;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
 <canvas id="c"></canvas>
+  <center><h1>CURRENT VERSION: 3.21</h1></center>
+<button id="settingsBtn">⚙ Settings</button>
+
+<div id="settingsPopup">
+  <h2>Settings</h2>
+
+  <label><input type="checkbox" id="toggleGrid" checked> Show Grid</label>
+  <label><input type="checkbox" id="toggleRocks" checked> Show Rocks</label>
+  <label><input type="checkbox" id="toggleItems" checked> Show Items</label>
+
+  <label>Player Speed: <span id="speedVal">5</span></label>
+  <input type="range" id="playerSpeed" min="1" max="15" value="5">
+
+  <label>Grid Spacing: <span id="spacingVal">50</span></label>
+  <input type="range" id="gridSpacing" min="20" max="100" value="50">
+
+  <label>Pull Radius: <span id="radiusVal">100</span></label>
+  <input type="range" id="pullRadius" min="20" max="200" value="100">
+
+  <button id="resetChunks">Reset Chunks</button>
+  <button id="closeSettings">Close</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
 const canvas = document.getElementById("c");
 const ctx = canvas.getContext("2d");
 
+// Gameplay variables
 let spacing = 50;
 let pullRadius = 100;
-let points = [];
-
 let player = { x: 0, y: 0, speed: 5, r: 15 };
 
-let obstacles = [];
+let chunkSize = { w: window.innerWidth, h: window.innerHeight };
+let chunks = {};
 let chunkX = 0, chunkY = 0;
-let cols, rows;
 
-// Track input
+let camera = { x: 0, y: 0, transitioning: false };
+
+// Settings toggles
+let showItems = true;
+let showRocks = true;
+let showGrid = true;
+
+// Settings popup
+const settingsBtn = document.getElementById("settingsBtn");
+const popup = document.getElementById("settingsPopup");
+settingsBtn.onclick = () => popup.style.display = "block";
+document.getElementById("closeSettings").onclick = () => popup.style.display = "none";
+
+// Checkbox bindings
+document.getElementById("toggleGrid").addEventListener("change", e => showGrid = e.target.checked);
+document.getElementById("toggleRocks").addEventListener("change", e => showRocks = e.target.checked);
+document.getElementById("toggleItems").addEventListener("change", e => showItems = e.target.checked);
+
+// Range bindings
+const speedSlider = document.getElementById("playerSpeed");
+const spacingSlider = document.getElementById("gridSpacing");
+const radiusSlider = document.getElementById("pullRadius");
+
+speedSlider.addEventListener("input", () => {
+  player.speed = parseInt(speedSlider.value);
+  document.getElementById("speedVal").textContent = speedSlider.value;
+});
+
+spacingSlider.addEventListener("input", () => {
+  spacing = parseInt(spacingSlider.value);
+  document.getElementById("spacingVal").textContent = spacingSlider.value;
+  chunks = {}; // force rebuild
+});
+
+radiusSlider.addEventListener("input", () => {
+  pullRadius = parseInt(radiusSlider.value);
+  document.getElementById("radiusVal").textContent = pullRadius;
+});
+
+// Reset button
+document.getElementById("resetChunks").onclick = () => {
+  chunks = {};
+  makeChunk(chunkX, chunkY);
+};
+
+// Input
 let keys = {};
 window.addEventListener("keydown", e => keys[e.key] = true);
 window.addEventListener("keyup", e => keys[e.key] = false);
 
-function initGrid() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  cols = Math.floor(canvas.width / spacing);
-  rows = Math.floor(canvas.height / spacing);
-
-  points = [];
+// --- Game functions ---
+function makeChunk(cx, cy) {
+  let key = cx + "," + cy;
+  if (chunks[key]) return chunks[key];
+  let cols = Math.floor(chunkSize.w / spacing);
+  let rows = Math.floor(chunkSize.h / spacing);
+  let points = [];
   for (let y = 0; y <= rows; y++) {
     for (let x = 0; x <= cols; x++) {
-      let px = x * spacing;
-      let py = y * spacing;
+      let px = x * spacing + cx * chunkSize.w;
+      let py = y * spacing + cy * chunkSize.h;
       points.push({ ox: px, oy: py, x: px, y: py });
     }
   }
-}
-
-function generateObstacles() {
-  obstacles = [];
-  let num = 5 + Math.floor(Math.random() * 5);
-  for (let i = 0; i < num; i++) {
-    obstacles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: 30 + Math.random() * 40
-    });
+  let obstacles = [];
+  let items = [];
+  for (let i = 0; i < 6; i++) {
+    obstacles.push({ x: cx*chunkSize.w+Math.random()*chunkSize.w, y: cy*chunkSize.h+Math.random()*chunkSize.h, r: 50 });
   }
+  for (let i = 0; i < 4; i++) {
+    items.push({ x: cx*chunkSize.w+Math.random()*chunkSize.w, y: cy*chunkSize.h+Math.random()*chunkSize.h, r: 10, collected:false });
+  }
+  chunks[key] = { points, obstacles, items, cols, rows };
+  return chunks[key];
 }
 
 function updatePlayer() {
+  if (camera.transitioning) return;
   if (keys["ArrowUp"] || keys["w"]) player.y -= player.speed;
   if (keys["ArrowDown"] || keys["s"]) player.y += player.speed;
   if (keys["ArrowLeft"] || keys["a"]) player.x -= player.speed;
   if (keys["ArrowRight"] || keys["d"]) player.x += player.speed;
 
-  // Screen transitions
-  if (player.x < 0) {
-    chunkX--; player.x += canvas.width;
-    initGrid(); generateObstacles();
-  }
-  if (player.x > canvas.width) {
-    chunkX++; player.x -= canvas.width;
-    initGrid(); generateObstacles();
-  }
-  if (player.y < 0) {
-    chunkY--; player.y += canvas.height;
-    initGrid(); generateObstacles();
-  }
-  if (player.y > canvas.height) {
-    chunkY++; player.y -= canvas.height;
-    initGrid(); generateObstacles();
-  }
+  // Check for screen transitions
+  if (player.x < chunkX * chunkSize.w) startTransition(-1, 0);
+  if (player.x > (chunkX+1) * chunkSize.w) startTransition(1, 0);
+  if (player.y < chunkY * chunkSize.h) startTransition(0, -1);
+  if (player.y > (chunkY+1) * chunkSize.h) startTransition(0, 1);
+}
+
+function startTransition(dx, dy) {
+  if (camera.transitioning) return;
+  camera.transitioning = true;
+  chunkX += dx;
+  chunkY += dy;
+
+  let targetX = chunkX * chunkSize.w;
+  let targetY = chunkY * chunkSize.h;
+
+  // Wrap player to opposite edge
+  if (dx === -1) player.x = chunkX*chunkSize.w + chunkSize.w - player.r;
+  if (dx === 1) player.x = chunkX*chunkSize.w + player.r;
+  if (dy === -1) player.y = chunkY*chunkSize.h + chunkSize.h - player.r;
+  if (dy === 1) player.y = chunkY*chunkSize.h + player.r;
+
+  makeChunk(chunkX, chunkY);
+
+  gsap.to(camera, {
+    x: targetX,
+    y: targetY,
+    duration: 1,
+    ease: "power2.inOut",
+    onComplete: () => { camera.transitioning = false; }
+  });
 }
 
 function animate() {
   updatePlayer();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.translate(-camera.x, -camera.y);
 
-  ctx.strokeStyle = "white";
-  ctx.beginPath();
+  // Draw nearby chunks
+  for (let cy = chunkY-1; cy <= chunkY+1; cy++) {
+    for (let cx = chunkX-1; cx <= chunkX+1; cx++) {
+      let chunk = makeChunk(cx, cy);
 
-  for (let y = 0; y <= rows; y++) {
-    for (let x = 0; x <= cols; x++) {
-      let i = y * (cols + 1) + x;
-      let p = points[i];
-
-      // Relax back
-      p.x += (p.ox - p.x) * 0.05;
-      p.y += (p.oy - p.y) * 0.05;
-
-      // --- Player bulge (under blanket) ---
-      let dx = p.x - player.x;
-      let dy = p.y - player.y;
-      let dist = Math.sqrt(dx*dx + dy*dy);
-      if (dist < pullRadius) {
-        let force = (pullRadius - dist) * 0.3;
-        p.x += dx / dist * force;
-        p.y += dy / dist * force;
+      if (showGrid) {
+        ctx.strokeStyle = "white";
+        ctx.beginPath();
+        for (let y = 0; y <= chunk.rows; y++) {
+          for (let x = 0; x <= chunk.cols; x++) {
+            let i = y * (chunk.cols + 1) + x;
+            let p = chunk.points[i];
+            p.x += (p.ox - p.x) * 0.05;
+            p.y += (p.oy - p.y) * 0.05;
+            let dx = p.x - player.x;
+            let dy = p.y - player.y;
+            let dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist < pullRadius) {
+              let force = (pullRadius - dist) * 0.3;
+              p.x += dx / dist * force;
+              p.y += dy / dist * force;
+            }
+            if (x < chunk.cols) {
+              let p2 = chunk.points[i+1];
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+            }
+            if (y < chunk.rows) {
+              let p2 = chunk.points[i + (chunk.cols+1)];
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+            }
+          }
+        }
+        ctx.stroke();
       }
 
-      // --- Obstacle bulge (on top of blanket) ---
-      for (let ob of obstacles) {
-        let dx2 = p.x - ob.x;
-        let dy2 = p.y - ob.y;
-        let dist2 = Math.sqrt(dx2*dx2 + dy2*dy2);
-        if (dist2 < ob.r) {
-          let force2 = (ob.r - dist2) * 0.2;
-          p.x -= dx2 / dist2 * force2; // push opposite way
-          p.y -= dy2 / dist2 * force2;
+      if (showItems) {
+        ctx.fillStyle = "yellow";
+        for (let item of chunk.items) {
+          if (!item.collected) {
+            ctx.beginPath();
+            ctx.arc(item.x, item.y, item.r, 0, Math.PI*2);
+            ctx.fill();
+          }
         }
       }
 
-      // Draw horizontal lines
-      if (x < cols) {
-        let p2 = points[i + 1];
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(p2.x, p2.y);
-      }
-      // Draw vertical lines
-      if (y < rows) {
-        let p2 = points[i + (cols + 1)];
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(p2.x, p2.y);
+      if (showRocks) {
+        ctx.fillStyle = "gray";
+        for (let ob of chunk.obstacles) {
+          ctx.beginPath();
+          ctx.arc(ob.x, ob.y, ob.r, 0, Math.PI*2);
+          ctx.fill();
+        }
       }
     }
   }
-  ctx.stroke();
 
-  // Player under blanket = invisible
-  // (debug: uncomment below if you want to see)
-  // ctx.beginPath();
-  // ctx.arc(player.x, player.y, player.r, 0, Math.PI*2);
-  // ctx.fillStyle = "red";
-  // ctx.fill();
-
-  // Draw obstacles (optional: dark blobs)
-  ctx.fillStyle = "gray";
-  for (let ob of obstacles) {
-    ctx.beginPath();
-    ctx.arc(ob.x, ob.y, ob.r * 0.5, 0, Math.PI*2);
-    ctx.fill();
-  }
-
+  ctx.restore();
   requestAnimationFrame(animate);
 }
 
-// Start
-initGrid();
-generateObstacles();
-player.x = canvas.width / 2;
-player.y = canvas.height / 2;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+player.x = canvas.width/2;
+player.y = canvas.height/2;
+makeChunk(0,0);
 animate();
-
 </script>
 </body>
 </html>
