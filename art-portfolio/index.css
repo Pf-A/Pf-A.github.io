@@ -1,0 +1,92 @@
+/* Body styling */
+body {
+    text-align: center;
+    background-color: ivory;
+}
+center {
+    text-align: center;
+}
+
+
+h1,h2,h3,h4,h5,h6,p {
+  font-family: "Roboto Condensed", sans-serif;
+  font-optical-sizing: auto;
+  /*font-weight: <weight>;*/
+  font-style: normal;
+}
+h1 {
+    font-family: "Roboto Condensed", sans-serif;
+    font-optical-sizing: auto;
+    /*font-weight: <weight>;*/
+    font-style: normal;
+}
+
+.fancytype {
+  font-family: "Pinyon Script", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+bigtext {
+font-size: 75px;
+}
+
+p {
+    font-size: 25px;
+}
+
+quarter-text {
+    font-size: 35px;
+    font-family: "Roboto Condensed", sans-serif;
+  font-optical-sizing: auto;
+  /*font-weight: <weight>;*/
+  font-style: normal;
+      text-align: center;
+
+}
+
+.art-image-turnvertical {
+    /* size: 50px;
+  size-adjust: 50px; */
+  width: 350px;
+  height: 250px;
+  rotate: 90;
+}
+
+/*
+.art-image-turnvertical:hover {
+  width: 500px;
+  height: 350px;
+
+}
+  */
+  
+.align-right {
+  width: 600px; /* Example width - necessary for alignment to matter */
+  margin-left: auto; /* Ensures no left margin pushing it away */
+  margin-right: 0; /* The opposite of centering, forces it left */
+  
+}
+
+.align-left {
+  width: 650px; /* Example width - necessary for alignment to matter */
+  margin-left: 0; /* Ensures no left margin pushing it away */
+  margin-right: auto; /* The opposite of centering, forces it left */
+  
+}
+
+.art-image {
+  /* size: 50px;
+  size-adjust: 50px; */
+  width: 400px;
+  height: 300px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+}
+
+.row {
+  /* fix this */
+}
+
+.art-image:hover {
+            transform: scale(1.10);
+        }
