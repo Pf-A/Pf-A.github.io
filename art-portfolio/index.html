@@ -11,8 +11,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Mike's Art Portfolio (2025-2026)</title>
+    <script>
+        // this is inline because I want it to be. 
+        function checkForImages(replaceImages, runSilent) {
+            console.log('Checking for images...');
+            console.log(replaceImages);
+            // ill work on this later
+        }
+        
 </head>
 <body>
+
+    <script>
+        // Code to automatically run a function, in case javascript is added. 
+        // This should trigger a script to check that all the images loaded, and if not, replaces it with the 404 in ./resources/404.png
+        // There is a better way to do this, but this works for now. 
+        // This script is going to be inline for parity
+        checkForImages(false, true); // the first boolean is to replace missing images with 404s, the second one is for it to run silently. (broken)
+    </script>
     <center-content>
         <bigtext>Mike's <bigtext class=fancytype>Art </bigtext>  Portfolio</bigtext><br>
         <div class="box">
@@ -30,7 +46,7 @@
             <span aria-hidden="" class="marquee"> Quarter 4 </span></button></a>
         </div>
         <p>↓ Or scroll down! ↓</p>
-    </center-content>
+    </center-content> <!-- center-content ends here because it messes with formatting on the images. -->
     <br>
     <br>
     <br>
