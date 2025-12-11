@@ -54,7 +54,7 @@
         console.log('Test');
         function replaceAllWith404s() {
     console.log('Replacing all images with 404s...');
-    document.getElementById("art-image").forEach(img => img.src = "./resources/404.png");
+    document.querySelectorAll(".art-image", ".art-image-stretch-upwards").forEach(img => img.src = "./resources/404.png");
 }
     </script>
     <center-content>
@@ -105,5 +105,11 @@
                 <img id="art-image" class="art-image-stretch-upwards" src=./resources/color-theory.jpg>
                 <p>Color Theory Worksheet</p>
         </div>
+            <div class="align-left">
+                <img id="art-image" class="art-image" src="./resources/404.png">
+                    <p>Color Scheme Painting</p>
     </div>
+
+    <br><br><br><br><br>
+        <p>All images copyright 2025 Michael Carlson</p>
 </body>
