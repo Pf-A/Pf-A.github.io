@@ -52,6 +52,10 @@
         // This script is going to be inline for parity
        // checkForImages(true); // its not working so i commented it out 
         console.log('Test');
+        function replaceAllWith404s() {
+    console.log('Replacing all images with 404s...');
+    document.getElementById("art-image").forEach(img => img.src = "./resources/404.png");
+}
     </script>
     <center-content>
         <bigtext>Mike's <bigtext class=fancytype>Art </bigtext>  Portfolio</bigtext><br>
