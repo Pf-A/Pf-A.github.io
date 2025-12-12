@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <!--<script src="./index.js"></script>-->
+    <!--<script src="./index.js"></script>--> <!-- inline ftw -->
     <link rel="stylesheet" href="./index.css">
     <link rel="stylesheet" href="./uiverse.css">
     <link rel="icon" href="./resources/icon.png">
@@ -15,6 +15,9 @@
 </head>
 <body>
 <script>
+        
+        var updateHappening = true; // put on update warning (true is on, false is off)
+        updateHappeningCheck();
         // this is inline because I want it to be. 
         function checkForImages(replaceImages) {
             console.log('Checking for images...');
@@ -27,31 +30,37 @@
                 console.log('Exiting function now.');
             }
         }
-        
+
+    function updateHappeningCheck() {
+    console.log('Checking for the update warning...');
+    
+    // Check if the variable exists AND its value is true
+    if (typeof updateHappening !== 'undefined' && updateHappening === true) {
+        console.log('Showing Update Warning...');
+        document.getElementById("updateWarning").style.display = "block";
+    }
+    else {
+        console.log('Not showing update warning.');
+        document.getElementById("updateWarning").style.display = "none";
+    }
+}
+
+
 
         function replaceAllWith404s() {
     console.log('Replacing all images with 404s...');
     document.querySelectorAll(".art-image").forEach(img => img.src = "./resources/404.png");
+    document.querySelectorAll(".art-image-stretch-upwards").forEach(img => img.src = "./resources/404.png");
+
 }
-
-
-        function hideAllImages() {
-            console.log('Hiding all images...'); 
-            // run 4 times just to be sure 
-            document.getElementById('art-image').style.display: none; 
-            document.getElementById('art-image').style.display: none; 
-            document.getElementById('art-image').style.display: none; 
-            document.getElementById('art-image').style.display: none; 
-        }
-            
-    </script>
-    <script>
+    
+        // ------------------------------------------------------------------
         // Code to automatically run a function, in case javascript is added. 
         // This should trigger a script to check that all the images loaded, and if not, replaces it with the 404 in ./resources/404.png
         // There is a better way to do this, but this works for now. 
         // This script is going to be inline for parity
        // checkForImages(true); // its not working so i commented it out 
-        console.log('Test');
+        console.log('test');
         function replaceAllWith404s() {
     console.log('Replacing all images with 404s...');
     document.querySelectorAll(".art-image", ".art-image-stretch-upwards").forEach(img => img.src = "./resources/404.png");
@@ -59,6 +68,7 @@
     </script>
     <center-content>
         <bigtext>Mike's <bigtext class=fancytype>Art </bigtext>  Portfolio</bigtext><br>
+        <div class="updateWarning" id="updateWarning"><font color=red><h3>This site may be broken right now because features are being added! </h3></font></div>
         <div class="box">
             <p>Jump to a quarter...</p>
             <a href="#quarter-1"><button class="btn-23"><span class="text"> Quarter 1 </span>
@@ -72,7 +82,7 @@
 
             <a href="#quarter-4"><button class="btn-23"><span class="text"> Quarter 4</span>
             <span aria-hidden="" class="marquee"> Quarter 4 </span></button></a>
-            <button onclick="replaceAllWith404s()">Replace images</button>
+           <!-- <button onclick="replaceAllWith404s()">Replace images</button> -->
         </div>
         <p>↓ Or scroll down! ↓</p>
     </center-content> <!-- center-content ends here because it messes with formatting on the images. -->
@@ -83,7 +93,7 @@
         <quarter-text>Quarter 1</quarter-text>
         <div class="row">
             <div class="align-left">
-                <img id="art-image" class=art-image src="./resources/surreal-eye-drawing.jpg">
+                <img id="art-image" class="art-image-stretch-upwards" src="./resources/surreal-eye-drawing.jpg">
                 <p>Surreal Eye Drawing</p>
             </div>
             <div class="align-right">
