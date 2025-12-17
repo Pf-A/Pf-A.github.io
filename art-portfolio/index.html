@@ -85,6 +85,11 @@
         else {
             var showUpdateWarning = false; 
         }
+    }
+    function hideBeta() {
+        document.getElementById("betaMenu").style.display = "none"; 
+    }
+    
     </script>
     <center-content>
         <bigtext>Mike's <bigtext class=fancytype>Art </bigtext>  Portfolio</bigtext><br>
@@ -111,6 +116,8 @@
         <button onclick="replaceAllWith404s()">replace images w/ 404s</button>
         <button onclick="updateHappeningCheck()">Update warning test</button>
         <br><button onclick="var updateHappening = true;">^true</button><button onclick="var updateHappening = false;">^false</button>
+        <br><button onclick="console.clear()">Clear Console</button><button onclick="console.log('Test Message')">Test console</button>
+        <br><button onclick="hideBeta()">Hide this menu</button>
   
 </div>
 
