@@ -18,7 +18,11 @@
         // -------------------------------------------------------------------
     // initalization code 
         var updateHappening = true; // put on update warning (true is on, false is off)
-        updateHappeningCheck();
+        // updateHappeningCheck();
+    document.addEventListener("DOMContentLoaded", () => {
+    updateHappeningCheck();
+});
+
         // this is inline because I want it to be. 
     // -----------------------------------------------------------
         function checkForImages(replaceImages) {
