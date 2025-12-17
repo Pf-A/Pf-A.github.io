@@ -11,6 +11,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Mike's Art Portfolio (2025-2026)</title>
+    <style>
+        betaMenu {
+            position: absolute;
+  top: 50px;
+  right: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  padding: 8px 0;
+  min-width: 180px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  color: #333;
+  z-index: 9999;
+        }
+    </style>
     
 </head>
 <body>
@@ -21,6 +37,7 @@
         // updateHappeningCheck();
     document.addEventListener("DOMContentLoaded", () => {
     updateHappeningCheck();
+    document.getElementById('betaMenu').style.display = "none"; // in a update, add in another menu? 
 });
 
         // this is inline because I want it to be. 
@@ -56,6 +73,9 @@
     document.querySelectorAll(".art-image-stretch-upwards").forEach(img => img.src = "./resources/404.png");
 
 }
+    function unfinished() {
+        console.log('Enabling features menu...');
+        document.getElementById('betaMenu').style.display = "block";
     </script>
     <center-content>
         <bigtext>Mike's <bigtext class=fancytype>Art </bigtext>  Portfolio</bigtext><br>
@@ -77,6 +97,16 @@
         </div>
         <p>↓ Or scroll down! ↓</p>
     </center-content> <!-- center-content ends here because it messes with formatting on the images. -->
+    <div id="betaMenu" class="betaMenu">
+        <p>Unfinished Features Menu</p>
+        <button onclick="replaceAllWith404s()">replace images w/ 404s</button>
+        <button onclick="updateHappeningCheck()">Update warning test</button>
+        <br><button onclick="var updateHappening = true;">^true</button><button onclick="var updateHappening = false;">^false</button>
+  
+</div>
+
+        
+    </div>
     <br>
     <br>
     <br>
@@ -112,5 +142,5 @@
     </div>
 
     <br><br><br><br><br>
-        <p>All images copyright 2025 Michael Carlson.</p><p><a href="https://github.com/Pf-A/Pf-A.github.io">To the repository</a></p><button onclick=unfinished(true);>Enable unfinished features</button>
+        <p>All images copyright 2025 Michael Carlson.</p><p><a href="https://github.com/Pf-A/Pf-A.github.io">To the repository</a></p><button onclick=unfinished();>Enable unfinished features</button>
 </body>
