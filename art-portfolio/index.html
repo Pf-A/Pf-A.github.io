@@ -27,6 +27,9 @@
             color: #333;
             z-index: 9999;
         }
+        .bar {
+        border: 2px solid black;
+    }
     </style>
     
 </head>
@@ -78,7 +81,7 @@
         console.log('Enabling features menu...');
         document.getElementById('betaMenu').style.display = "block";
     }
-    function setUpdateVar(es) {
+    /* function setUpdateVar(es) {
         if (es === true) {
             var showUpdateWarning = true; 
         }
@@ -86,6 +89,7 @@
             var showUpdateWarning = false; 
         }
     }
+    */ // doesnt work 
     function hideBeta() {
         document.getElementById("betaMenu").style.display = "none"; 
     }
@@ -112,14 +116,15 @@
         <p>↓ Or scroll down! ↓</p>
     </center-content> <!-- center-content ends here because it messes with formatting on the images. -->
     <div id="betaMenu" class="betaMenu">
+        <div class="bar">
         <p>Unfinished Features Menu</p>
         <button onclick="replaceAllWith404s()">replace images w/ 404s</button>
         <button onclick="updateHappeningCheck()">Update warning test</button>
         <br><button onclick="var updateHappening = true;">^true</button><button onclick="var updateHappening = false;">^false</button>
-        <br><button onclick="console.clear()">Clear Console</button><button onclick="console.log('Test Message')">Test console</button>
+        <br><button onclick="console.clear()">Clear Console</button><button onclick="console.log('Test Message')">Test console</button><br>
+            <a href="chrome://kill"><button>kill site</button></a><a href="https://github.com/Pf-A/Pf-A.github.io"><button>repo</button></a>
         <br><button onclick="hideBeta()">Hide this menu</button>
-        <br><p>build 0010 - pf-a.github.io/art-portfolio/lockfile</p>
-  
+        </div>
 </div>
 
         
