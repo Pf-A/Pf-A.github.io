@@ -28,7 +28,7 @@
             z-index: 9999;
         }
         .bar {
-        border: 2px solid black;
+        border: 4px solid black;
     }
     </style>
     
@@ -93,6 +93,25 @@
     function hideBeta() {
         document.getElementById("betaMenu").style.display = "none"; 
     }
+
+
+    function updateClock() {
+    // Uses your requested variable definition
+    let currentTime = new Date(Date.now());
+    
+    // Formats the date into a readable string
+    let timeString = currentTime.toLocaleString();
+    
+    // Injects the string into the paragraph
+    document.getElementById('display-time').textContent = timeString;
+}
+
+// Runs the function every 1000 milliseconds (1 second)
+setInterval(updateClock, 1000);
+
+// Calls it immediately once so the page doesn't start blank
+updateClock();
+
     
     </script>
     <center-content>
@@ -124,6 +143,7 @@
         <br><button onclick="console.clear()">Clear Console</button><button onclick="console.log('Test Message')">Test console</button><br>
             <a href="chrome://kill"><button>kill site</button></a><a href="https://github.com/Pf-A/Pf-A.github.io"><button>repo</button></a>
         <br><button onclick="hideBeta()">Hide this menu</button>
+            <p id="display-time"></p>
         </div>
 </div>
 
