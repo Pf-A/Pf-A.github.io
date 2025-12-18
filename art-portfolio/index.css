@@ -91,6 +91,23 @@ quarter-text {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
 }
+.art-image {
+  /* size: 50px;
+  size-adjust: 50px; */
+  width: 400px;
+  height: 300px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+}
+.art-image-rotate {
+  /* size: 50px;
+  size-adjust: 50px; */
+  width: 400px;
+  height: 300px;
+    rotate: 360; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+}
 
 .row {
   /* fix this */
