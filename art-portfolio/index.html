@@ -31,7 +31,37 @@
         border: 4px solid black;
     }
     </style>
-    
+    <style>
+.dropdown {
+  width: 300px;
+  font-family: Arial, sans-serif;
+}
+
+.dropdown input {
+  display: none;
+}
+
+.dropdown-title {
+  display: block;
+  padding: 10px;
+  background: #eee;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dropdown-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 10px;
+}
+
+.dropdown input:checked ~ .dropdown-content {
+  max-height: 200px;
+  padding: 10px;
+}
+</style>
+
 </head>
 <body>
 <script>
@@ -160,6 +190,16 @@ updateClock();
             <div class="align-left">
                 <img id="art-image" class="art-image" src="./resources/surreal-eye-drawing.jpg">
                 <p>Surreal Eye Drawing</p>
+                <div class="dropdown">
+  <input type="checkbox" id="toggle">
+  <label for="toggle" class="dropdown-title">
+    Description
+  </label>
+
+  <div class="dropdown-content">
+    This text appears when the dropdown is opened.
+  </div>
+</div>
             </div>
             <div class="align-right">
                 <img id="art-image" class="art-image" src="./resources/realistic-eye-drawing.jpg"> 
