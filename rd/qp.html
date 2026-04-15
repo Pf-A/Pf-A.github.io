@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>quickCORS V3.7.1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px 0;
+      width: 100%;
+    }
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: 1px solid #ccc;
+      margin-top: 15px;
+      background: white;
+    }
+  </style>
+</head>
+<body>
+<center>
+  <h2>quickCORS V3.9.0</h2>
+  <p><i>"I hate modern web development!"</i></p>
+  <input type="text" id="urlInput" placeholder="Enter url here">
+  <button onclick="loadSite()">Load Site</button>
+  <button onclick="toggleFullscreen()">Fullscreen</button>
+
+  <iframe id="viewer"></iframe>
+
+  <script>
+    const proxy = "https://cors-anywhere.herokuapp.com/";
+
+    async function loadSite() {
+      let url = document.getElementById("urlInput").value.trim();
+
+      if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        url = "https://" + url;
+      }
+
+      const proxiedUrl = proxy + url;
+      try {
+        const response = await fetch(proxiedUrl, {
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
+        const html = await response.text();
+        const blob = new Blob([html], {type: 'text/html'});
+        const blobUrl = URL.createObjectURL(blob);
+        document.getElementById("viewer").src = blobUrl;
+      } catch (error) {
+        console.error('Error loading site:', error);
+        alert('Failed to load site: ' + error.message);
+      }
+    }
+
+    function toggleFullscreen() {
+      const iframe = document.getElementById('viewer');
+      if (!document.fullscreenElement) {
+        iframe.requestFullscreen().catch(err => {
+          alert(`your computer sux at fullscreen: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+  </script>
+<p>USE AT OWN RISK! I DONT WANT TO GET SUED BY MPS! -Pf-A 2024</p>
+</center> <!-- centers still alive in my heart, i hate css lol-->
+</body>
+</html>
