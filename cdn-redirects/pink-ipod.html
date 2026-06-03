@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin: 0 0 10px 0;
+        }
+        p {
+            color: #666;
+            margin: 10px 0;
+        }
+        a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Redirecting...</h1>
+        <p>You will be redirected shortly.</p>
+        <p>If not redirected, <a href="https://example.com">click here</a>
+
+    <script>
+        // Change the URL below to your target redirect URL
+        const redirectUrl = "https://cdn.hackclub.com/019e8f6d-f8a4-7097-affe-7a0485a45ec4/Screenshot%202026-06-03%20143406.png";
+        
+        // Redirect after 3 seconds
+        setTimeout(() => {
+            window.location.href = redirectUrl;
+        }, 3000);
+    </script>
+</body>
+</html>
