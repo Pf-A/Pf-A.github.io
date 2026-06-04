@@ -67,7 +67,7 @@
 <script>
         // -------------------------------------------------------------------
     // initalization code 
-        var updateHappening = true; // put on update warning (true is on, false is off)
+        var updateHappening = false; // put on update warning (true is on, false is off)
         // updateHappeningCheck();
     document.addEventListener("DOMContentLoaded", () => {
     updateHappeningCheck();
@@ -165,6 +165,7 @@ updateClock();
         </div>
         <p>↓ Or scroll down! ↓</p>
     </center-content> <!-- center-content ends here because it messes with formatting on the images. -->
+    
     <div id="betaMenu" class="betaMenu">
         <div class="bar">
         <p>Unfinished Features Menu</p>
@@ -173,10 +174,13 @@ updateClock();
         <br><button onclick="var updateHappening = true;">^true</button><button onclick="var updateHappening = false;">^false</button>
         <br><button onclick="console.clear()">Clear Console</button><button onclick="console.log('Test Message')">Test console</button><br>
             <a href="chrome://kill"><button>kill site</button></a><a href="https://github.com/Pf-A/Pf-A.github.io"><button>repo</button></a>
+            <br><button onclick="replaceAllWith401s()">replace images w/ 401s</button><button onclick="alert('Completed applying changed')">Apply changes</button>
+                
         <br><button onclick="hideBeta()">Hide this menu</button>
             <p id="display-time"></p>
         </div>
 </div>
+    <!-- unfinished features menu ends here -->
 
         
     </div>
@@ -254,7 +258,7 @@ updateClock();
                 <p>2 Page Flipbook</p>
         </div>
     <div class="align-right">
-                <img id="art-image" class="art-image" src="./resources/flipbook.gif"> 
+                <img id="art-image" class="art-image" src="./resources/flipbook.GIF"> 
                 <p>Flipbook project</p>
         </div>
     <div class="align-left">
