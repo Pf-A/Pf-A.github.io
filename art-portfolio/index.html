@@ -61,7 +61,7 @@
   padding: 10px;
 }
 .box-25 {
-    display: none; 
+    display: block; 
 }
 .box-26 {
     display: block;
@@ -155,13 +155,28 @@ updateClock();
         <h3><i>"I swear ill add descriptions later!"</i></h3>
         <div class="updateWarning" id="updateWarning"><font color=red><h3>This site may be broken right now because features are being added! </h3></font></div>
         <div class="box">
-            <p>Jump to a school year...</p>
+           <!-- <p>Jump to a school year...</p>
            <button class="btn-23" onclick="document.getElementById("box-25").style.display = "none";"><span class="text"> 2025-2026 </span>
                 <span aria-hidden="" class="marquee"> 2025-2026 </span></button>
             <a href="#26"><button class="btn-23"><span class="text"> 2026-2027 </span>
                 <span aria-hidden="" class="marquee"> 2026-2027 </span></button></a>
+            <div class="box-26">-->
+                <p>Jump to a quarter... (2026-2027)</p>
+                <a href="#quarter-1-26"><button class="btn-23"><span class="text"> Quarter 1 </span>
+                <span aria-hidden="" class="marquee"> Quarter 1 </span></button></a>
+    
+                <!--<a href="#quarter-2-26"><button class="btn-23"><span class="text"> Quarter 2</span>
+                <span aria-hidden="" class="marquee"> Quarter 2 </span></button></a>
+    
+                <a href="#quarter-3-26"><button class="btn-23"><span class="text"> Quarter 3</span>
+                <span aria-hidden="" class="marquee"> Quarter 3 </span></button></a>
+    
+                <a href="#quarter-4-26"><button class="btn-23"><span class="text"> Quarter 4</span>
+                <span aria-hidden="" class="marquee"> Quarter 4 </span></button></a>
+               <!-- <button onclick="replaceAllWith404s()">Replace images</button> -->
+            </div>
             <div class="box-25" id="box-25">
-                <p>Jump to a quarter...</p>
+                <p>Jump to a quarter... (2025-2026)</p>
                 <a href="#quarter-1"><button class="btn-23"><span class="text"> Quarter 1 </span>
                 <span aria-hidden="" class="marquee"> Quarter 1 </span></button></a>
     
@@ -175,21 +190,7 @@ updateClock();
                 <span aria-hidden="" class="marquee"> Quarter 4 </span></button></a>
                <!-- <button onclick="replaceAllWith404s()">Replace images</button> -->
             </div>
-            <div class="box-26">
-                <p>Jump to a quarter...</p>
-                <a href="#quarter-1-26"><button class="btn-23"><span class="text"> Quarter 1 </span>
-                <span aria-hidden="" class="marquee"> Quarter 1 </span></button></a>
-    
-                <a href="#quarter-2-26"><button class="btn-23"><span class="text"> Quarter 2</span>
-                <span aria-hidden="" class="marquee"> Quarter 2 </span></button></a>
-    
-                <a href="#quarter-3-26"><button class="btn-23"><span class="text"> Quarter 3</span>
-                <span aria-hidden="" class="marquee"> Quarter 3 </span></button></a>
-    
-                <a href="#quarter-4-26"><button class="btn-23"><span class="text"> Quarter 4</span>
-                <span aria-hidden="" class="marquee"> Quarter 4 </span></button></a>
-               <!-- <button onclick="replaceAllWith404s()">Replace images</button> -->
-            </div>
+            
         </div>
         <p>↓ Or scroll down! ↓</p>
     </center-content> <!-- center-content ends here because it messes with formatting on the images. -->
